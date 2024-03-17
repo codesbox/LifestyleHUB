@@ -23,7 +23,9 @@ class HomeViewModel : ViewModel() {
 
     }
 
-    private fun getWeather() {}
+    private fun getWeather() {
+        _weatherState.value = Weather.Model("Привет")
+    }
 
 
 }

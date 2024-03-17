@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -51,6 +52,7 @@ fun WeatherWidget(viewModel: HomeViewModel) {
     Card(
         Modifier
             .fillMaxWidth()
+            .height(100.dp)
             .padding(15.dp)
     ) {
         when (weather.value) {
@@ -63,7 +65,7 @@ fun WeatherWidget(viewModel: HomeViewModel) {
             }
 
             is Weather.Model -> {
-                Text(text = "Model")
+                Text(text = (weather.value as Weather.Model).text)
             }
         }
     }
