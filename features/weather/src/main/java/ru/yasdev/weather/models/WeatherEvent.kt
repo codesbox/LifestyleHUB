@@ -1,4 +1,4 @@
-package ru.yasdev.lifestylehub.screens.home
+package ru.yasdev.weather.models
 
 sealed interface WeatherEvent {
     data object NoPermissions : WeatherEvent

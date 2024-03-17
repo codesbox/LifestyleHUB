@@ -1,4 +1,4 @@
-package ru.yasdev.lifestylehub.components
+package ru.yasdev.weather.presentation
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,12 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import ru.yasdev.domain.weather.Weather
-import ru.yasdev.lifestylehub.screens.home.HomeViewModel
-import ru.yasdev.lifestylehub.screens.home.WeatherEvent
+import org.koin.androidx.compose.koinViewModel
+import ru.yasdev.weather.models.Weather
+import ru.yasdev.weather.models.WeatherEvent
+
 
 @Composable
-fun WeatherWidget(viewModel: HomeViewModel) {
+fun WeatherWidget() {
+
+    val viewModel = koinViewModel<WeatherViewModel>()
 
     val weather = viewModel.weatherState.collectAsState()
 
@@ -48,13 +51,7 @@ fun WeatherWidget(viewModel: HomeViewModel) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
-
-    Card(
-        Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(15.dp)
-    ) {
+    Card(Modifier.fillMaxWidth().height(100.dp).padding(15.dp)) {
         when (weather.value) {
             Weather.Loading -> {
                 Text(text = "Loading")
@@ -70,4 +67,3 @@ fun WeatherWidget(viewModel: HomeViewModel) {
         }
     }
 }
-

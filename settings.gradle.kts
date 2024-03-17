@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "LifestyleHUB"
 include(":app")
-include(":domain")
+include(":features:weather")

@@ -1,4 +1,4 @@
-package ru.yasdev.domain
+package ru.yasdev.weather
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ru.yasdev.domain.test", appContext.packageName)
+        assertEquals("ru.yasdev.weather.test", appContext.packageName)
     }
 }

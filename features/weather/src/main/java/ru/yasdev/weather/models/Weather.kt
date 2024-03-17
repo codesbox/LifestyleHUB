@@ -1,4 +1,4 @@
-package ru.yasdev.domain.weather
+package ru.yasdev.weather.models
 
 sealed interface Weather {
     data object Loading : Weather

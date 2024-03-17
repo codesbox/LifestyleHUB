@@ -1,4 +1,4 @@
-package ru.yasdev.domain
+package ru.yasdev.weather
 
 import org.junit.Test
 
