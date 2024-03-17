@@ -77,7 +77,9 @@ fun BottomBarNavGraph(
     navController: NavHostController
 ) {
     NavHost(
-        navController = navController, startDestination = LEISURE_GRAPH_ROUTE, route = BOTTOM_NAV_GRAPH_ROUTE
+        navController = navController,
+        startDestination = HOME_GRAPH_ROUTE,
+        route = BOTTOM_NAV_GRAPH_ROUTE
     ) {
         homeNavGraph(navController)
         myLeisureNavGraph(navController)
