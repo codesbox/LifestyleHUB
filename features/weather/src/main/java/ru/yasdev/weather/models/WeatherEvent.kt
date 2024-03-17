@@ -1,6 +1,6 @@
 package ru.yasdev.weather.models
 
-sealed interface WeatherEvent {
+internal sealed interface WeatherEvent {
     data object NoPermissions : WeatherEvent
     data object GetWeather : WeatherEvent
 }

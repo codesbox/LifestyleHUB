@@ -1,4 +1,4 @@
 package ru.yasdev.weather.domain
 
-class GetWeatherUseCase {
+internal class GetWeatherUseCase {
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import ru.yasdev.weather.models.Weather
 import ru.yasdev.weather.models.WeatherEvent
 
-class WeatherViewModel : ViewModel() {
+internal class WeatherViewModel : ViewModel() {
 
     private val _weatherState = MutableStateFlow<Weather>(Weather.Loading)
     val weatherState = _weatherState.asStateFlow()
