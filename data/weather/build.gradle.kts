@@ -40,4 +40,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.koin.androidx.compose)
+
+    implementation(project(":features:weather"))
 }

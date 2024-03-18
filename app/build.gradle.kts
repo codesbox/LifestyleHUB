@@ -72,4 +72,5 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
     implementation(project(":features:weather"))
+    implementation(project(":data:weather"))
 }
