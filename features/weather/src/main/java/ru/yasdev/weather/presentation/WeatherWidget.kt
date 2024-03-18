@@ -77,7 +77,7 @@ fun WeatherWidget() {
             }
 
             is Weather.Model -> {
-                Text(text = (weather.value as Weather.Model).text)
+                Text(text = (weather.value as Weather.Model).city)
             }
             Weather.ErrorOnReceipt -> {
                 Text(text = "Ошибка при загрузке")
