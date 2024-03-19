@@ -84,7 +84,7 @@ fun WeatherWidget() {
     Card(
         Modifier
             .fillMaxWidth()
-            .height(160.dp)
+            .height(170.dp)
             .padding(15.dp)) {
         when (weather.value) {
             Weather.Loading -> {
@@ -109,14 +109,14 @@ fun WeatherWidget() {
                 Row {
                     Box(modifier = Modifier
                         .fillMaxHeight()
-                        .padding(start = 15.dp, top = 15.dp), contentAlignment = Alignment.TopCenter){
+                        .padding(start = 15.dp), contentAlignment = Alignment.Center){
                         Box(modifier = Modifier
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.surface), contentAlignment = Alignment.Center){
                             Image(
                                 painter = rememberAsyncImagePainter((weather.value as Weather.Model).icon),
                                 contentDescription = "null",
-                                modifier = Modifier.size(50.dp)
+                                modifier = Modifier.size(60.dp)
                             )
                         }
                     }
@@ -136,6 +136,7 @@ fun WeatherWidget() {
                             Text(fontSize = MaterialTheme.typography.titleLarge.fontSize, text = "${(weather.value as Weather.Model).maxTemp}°", modifier = Modifier.padding(end = 15.dp))
                             Text(fontSize = MaterialTheme.typography.titleLarge.fontSize, text = "${(weather.value as Weather.Model).minTemp}°")
                         }
+                        Text(text = "Ощущается как ${(weather.value as Weather.Model).feelLike}", Modifier.padding(end = 15.dp))
                     }
                     
                 }
