@@ -23,3 +23,5 @@ rootProject.name = "LifestyleHUB"
 include(":app")
 include(":features:weather")
 include(":data:weather")
+include(":data:recommendations_feed")
+include(":features:recommendations_feed")
