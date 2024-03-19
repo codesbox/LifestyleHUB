@@ -73,4 +73,6 @@ dependencies {
 
     implementation(project(":features:weather"))
     implementation(project(":data:weather"))
+    implementation(project(":features:recommendations_feed"))
+    implementation(project(":data:recommendations_feed"))
 }

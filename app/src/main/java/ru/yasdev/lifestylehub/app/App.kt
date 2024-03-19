@@ -4,6 +4,8 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 import ru.yasdev.lifestylehub.di.appModule
+import ru.yasdev.recommendations_feed.di.recommendationsFeedDataModule
+import ru.yasdev.recommendations_feed.di.recommendationsFeedModule
 import ru.yasdev.weather.di.weatherDataModule
 import ru.yasdev.weather.di.weatherModule
 
@@ -12,7 +14,7 @@ class App : Application() {
         super.onCreate()
         GlobalContext.startKoin {
             androidContext(this@App)
-            modules(listOf(appModule, weatherModule, weatherDataModule))
+            modules(listOf(appModule, weatherModule, weatherDataModule, recommendationsFeedDataModule, recommendationsFeedModule))
         }
     }
 }
