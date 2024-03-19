@@ -18,11 +18,9 @@ import ru.yasdev.weather.models.WeatherDTO
 import kotlin.math.roundToInt
 
 
-class WeatherDataSource {
+class WeatherDataSource(private val client: HttpClient) {
 
     private val API_KEY = "82903ac09d33883828290c9bb4b240af"
-
-    private val client = HttpClient(OkHttp)
 
     private val json = Json { ignoreUnknownKeys = true }
 
