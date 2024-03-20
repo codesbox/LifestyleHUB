@@ -1,5 +1,8 @@
 package ru.yasdev.recommendations_feed.models
 
 data class RecommendationModel(
-    val test: String
+    val title: String,
+    val address: String,
+    val photoList: List<String>,
+    val categories: List<String>
 )
