@@ -1,6 +1,7 @@
 package ru.yasdev.lifestylehub.screens.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -23,7 +24,10 @@ fun HomeScreen(navController: NavController) {
         mutableStateOf(LocationState.Loading)
     }
     GetLocation(locationState)
-    WeatherWidget(locationState)
-    RecommendationsFeed(locationState)
+    Column {
+        WeatherWidget(locationState)
+        RecommendationsFeed(locationState)
+    }
+
 }
 
