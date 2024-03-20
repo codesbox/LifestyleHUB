@@ -6,8 +6,8 @@ import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 class GetRecommendationsFeedUseCase(private val repository: RecommendationsFeedRepository) {
 
-    suspend fun execute(location: Location?, isRefresh: Boolean = false): RecommendationsFeedState {
-        return repository.getRecommendationsFeed(location, isRefresh)
+    suspend fun execute(location: Location?, isRefresh: Boolean = false, url: String?): RecommendationsFeedState {
+        return repository.getRecommendationsFeed(location, isRefresh, url)
     }
 
 

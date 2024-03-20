@@ -5,6 +5,6 @@ import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 interface RecommendationsFeedRepository {
 
-    suspend fun getRecommendationsFeed(location: Location?, isRefresh: Boolean): RecommendationsFeedState
+    suspend fun getRecommendationsFeed(location: Location?, isRefresh: Boolean, url: String?): RecommendationsFeedState
 
 }

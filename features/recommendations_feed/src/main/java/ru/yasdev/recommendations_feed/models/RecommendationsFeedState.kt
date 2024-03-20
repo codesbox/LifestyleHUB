@@ -4,6 +4,6 @@ sealed interface RecommendationsFeedState{
 
     data object Loading : RecommendationsFeedState
     data object NoPermissions : RecommendationsFeedState
-    data class Model(val list: List<RecommendationModel>) : RecommendationsFeedState
+    data class Model(val list: List<RecommendationModel>, val url: String) : RecommendationsFeedState
     data object ErrorOnReceipt: RecommendationsFeedState
 }

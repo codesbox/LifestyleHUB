@@ -6,8 +6,8 @@ import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 class RecommendationsFeedRepositoryImpl(private val dataSource: RecommendationsFeedDataSource):
     RecommendationsFeedRepository {
-    override suspend fun getRecommendationsFeed(location: Location?, isRefresh: Boolean): RecommendationsFeedState {
-        return dataSource.getRecommendationsFeed(location, isRefresh)
+    override suspend fun getRecommendationsFeed(location: Location?, isRefresh: Boolean, url: String?): RecommendationsFeedState {
+        return dataSource.getRecommendationsFeed(location, isRefresh, url)
     }
 
 

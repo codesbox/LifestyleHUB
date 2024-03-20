@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -36,13 +37,17 @@ import ru.yasdev.recommendations_feed.models.FeedEvent
 import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 
+
+
 @Composable
 fun RecommendationsFeed(locationState: MutableState<LocationState>){
 
     val viewModel = koinViewModel<RecommendationsFeedViewModel>()
-    var location: Location? = null
     val lazyColumnListState = rememberLazyListState()
+    val state = viewModel.recommendationsFeedState.collectAsState()
     val isRefresh = viewModel.isRefresh.collectAsState()
+
+
 
 
         when(locationState.value){
@@ -51,12 +56,15 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>){
                 viewModel.onFeedEvent(FeedEvent.NoPermissions)
             }
             is LocationState.Model -> {
-                location = (locationState.value as LocationState.Model).location
-                viewModel.onFeedEvent(FeedEvent.RefreshFeed((locationState.value as LocationState.Model).location))
+                if (state.value !is RecommendationsFeedState.Model){
+                    viewModel.zzz((locationState.value as LocationState.Model).location)
+                    viewModel.onFeedEvent(FeedEvent.RefreshFeed((locationState.value as LocationState.Model).location))
+                }
+
             }
         }
 
-    val state = viewModel.recommendationsFeedState.collectAsState()
+
 
     when(state.value){
         RecommendationsFeedState.ErrorOnReceipt -> {
@@ -76,6 +84,7 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>){
             }
         }
         is RecommendationsFeedState.Model -> {
+            Log.d("GHJGHGJHGHJGJH", (state.value as RecommendationsFeedState.Model).list.toString())
             LazyColumn(state = lazyColumnListState) {
                 items((state.value as RecommendationsFeedState.Model).list){item->
                     Card(
@@ -84,11 +93,14 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>){
                             .padding(start = 15.dp, top = 15.dp, end = 15.dp)
                     ) {
                         Text(text = item.title)
-                        Image(
-                            painter = rememberAsyncImagePainter(item.photoList[0]),
-                            contentDescription = "null",
-                            modifier = Modifier.size(200.dp)
-                        )
+                        if (item.photoList.isNotEmpty()){
+                            Image(
+                                painter = rememberAsyncImagePainter(item.photoList[0]),
+                                contentDescription = "null",
+                                modifier = Modifier.size(200.dp)
+                            )
+                        }
+
                     }
                 }
                 item(key = (state.value as RecommendationsFeedState.Model).list.size){
@@ -118,7 +130,7 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>){
     }
     if(isRefresh.value){
         println("shdfjkshdjfhsjdhfjsdhjfhsdjf")
-        viewModel.onFeedEvent(FeedEvent.GetFeed(location))
+        viewModel.onFeedEvent(FeedEvent.GetFeed)
 
 
     }

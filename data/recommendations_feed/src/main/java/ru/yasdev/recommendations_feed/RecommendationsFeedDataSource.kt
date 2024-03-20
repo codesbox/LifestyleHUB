@@ -17,16 +17,12 @@ import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 class RecommendationsFeedDataSource(private val client: HttpClient) {
 
     private val API_KEY = "fsq3/7zKkXDxUnycG2la3H64cnY46t4U0qoKznWy+ub2+A8="
-    private var url: String? = null
     private val json = Json { ignoreUnknownKeys = true }
 
     suspend fun getRecommendationsFeed(
-        location: Location?, isRefresh: Boolean
+        location: Location?, isRefresh: Boolean, url: String?
     ): RecommendationsFeedState {
         Log.d("UUUUUUU", url.toString())
-        if (isRefresh) {
-            url = null
-        }
         if (location != null) {
             return try {
                 val baseUrl =
@@ -47,7 +43,6 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
                 }
                 val headerValue = response.headers["link"]
                 val parts = headerValue?.split("[<>]".toRegex())
-                url = parts?.get(1)
                 Log.d("URL", url.toString())
                 val jsonString: String = response.bodyAsText()
                 val results = JSONObject(jsonString).get("results").toString()
@@ -85,13 +80,14 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
 
                 }
                 println(list)
-                RecommendationsFeedState.Model(list)
+                RecommendationsFeedState.Model(list, parts?.get(1).toString())
             } catch (e: Exception) {
                 println(e.message)
                 RecommendationsFeedState.ErrorOnReceipt
             }
 
         } else {
+            println("ОШИБКА НАШЛАСЬ!!!!!!!")
             return RecommendationsFeedState.ErrorOnReceipt
         }
 
