@@ -20,21 +20,14 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
     private val json = Json { ignoreUnknownKeys = true }
 
     suspend fun getRecommendationsFeed(
-        location: Location?, isRefresh: Boolean, url: String?
+        location: Location?, url: String?
     ): RecommendationsFeedState {
-        Log.d("UUUUUUU", url.toString())
         if (location != null) {
             return try {
                 val baseUrl =
                     "https://api.foursquare.com/v3/places/search?ll${location.latitude},${location.longitude}&radius=20000&limit=10"
                 val list = mutableListOf<RecommendationModel>()
-                val response = client.get(
-                    if (url == null) {
-                        baseUrl
-                    } else {
-                        url.toString()
-                    }
-                ) {
+                val response = client.get(url ?: baseUrl) {
                     url {
                         headers.append("accept", "application/json")
                         headers.append("Authorization", API_KEY)
@@ -43,7 +36,6 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
                 }
                 val headerValue = response.headers["link"]
                 val parts = headerValue?.split("[<>]".toRegex())
-                Log.d("URL", url.toString())
                 val jsonString: String = response.bodyAsText()
                 val results = JSONObject(jsonString).get("results").toString()
                 val recommendationDtoList: List<RecommendationDTO> = json.decodeFromString<List<RecommendationDTO>>(string = results)
@@ -60,14 +52,14 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
                         title = recommendation.name,
                         address = recommendation.location.formatted_address,
                         photoList = photoDTOList.map {
-                            val width = if (it.width > 200){
-                                200
+                            val width = if (it.width > 400){
+                                400
                             }
                             else{
                                 it.width.toInt()
                             }
-                            val height = if (it.height > 200){
-                                200
+                            val height = if (it.height > 400){
+                                400
                             }
                             else{
                                 it.height.toInt()
@@ -79,19 +71,14 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
                     )
 
                 }
-                println(list)
-                RecommendationsFeedState.Model(list, parts?.get(1).toString())
+                RecommendationsFeedState.Model(list, parts?.get(1))
             } catch (e: Exception) {
-                println(e.message)
                 RecommendationsFeedState.ErrorOnReceipt
             }
 
         } else {
-            println("ОШИБКА НАШЛАСЬ!!!!!!!")
             return RecommendationsFeedState.ErrorOnReceipt
         }
-
-
     }
 
 }
