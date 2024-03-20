@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.koin.androidx.compose)
+    implementation(project(":common"))
 }

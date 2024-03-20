@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,47 +39,25 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.compose.koinViewModel
+import ru.yasdev.common.LocationState
 import ru.yasdev.weather.models.Weather
 import ru.yasdev.weather.models.WeatherEvent
 
 
 @Composable
-fun WeatherWidget() {
+fun WeatherWidget(locationState: MutableState<LocationState>) {
 
     val viewModel = koinViewModel<WeatherViewModel>()
 
     val weather = viewModel.weatherState.collectAsState()
 
-    val context = LocalContext.current
-
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    viewModel.onWeatherEvent(WeatherEvent.GetWeather(location))
-                }
-
-        } else {
+    when(locationState.value){
+        LocationState.Loading -> {}
+        LocationState.NoPermissions -> {
             viewModel.onWeatherEvent(WeatherEvent.NoPermissions)
         }
-    }
-
-
-    LaunchedEffect(Unit) {
-        if (ContextCompat.checkSelfPermission(
-                context, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    viewModel.onWeatherEvent(WeatherEvent.GetWeather(location))
-                }
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        is LocationState.Model -> {
+            viewModel.onWeatherEvent(WeatherEvent.GetWeather((locationState.value as LocationState.Model).location))
         }
     }
     Card(

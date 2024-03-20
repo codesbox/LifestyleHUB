@@ -70,9 +70,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.play.services.location)
 
     implementation(project(":features:weather"))
     implementation(project(":data:weather"))
     implementation(project(":features:recommendations_feed"))
     implementation(project(":data:recommendations_feed"))
+    implementation(project(":common"))
 }
