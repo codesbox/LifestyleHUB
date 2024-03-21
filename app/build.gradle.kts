@@ -79,4 +79,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":data:details"))
     implementation(project(":features:details"))
+    implementation(project(":features:auth:sign_in"))
+    implementation(project(":features:auth:sign_up"))
+    implementation(project(":features:auth:profile"))
+    implementation(project(":data:auth"))
 }
