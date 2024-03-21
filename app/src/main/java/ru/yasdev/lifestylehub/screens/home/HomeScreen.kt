@@ -16,13 +16,10 @@ import ru.yasdev.recommendations_feed.presentation.RecommendationsFeed
 import ru.yasdev.weather.presentation.WeatherWidget
 
 @Composable
-fun HomeScreen(navController: NavController, setBaseDetails: (details: BaseDetails) -> Unit) {
+fun HomeScreen(navController: NavController) {
 
-    fun navigateToDetails(recommendationModel: RecommendationModel){
-        setBaseDetails(BaseDetails(title = recommendationModel.title,
-            address = recommendationModel.address, photoList = recommendationModel.photoList,
-            categories = recommendationModel.categories, id = recommendationModel.id))
-        navController.navigate(Destinations.DetailsScreenRoute.route)
+    fun navigateToDetails(id: String){
+        navController.navigate("details/$id")
     }
 
     val vm = koinViewModel<HomeViewModel>()

@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val sharedViewModel = koinViewModel<SharedViewModel>()
             LifestyleHUBTheme {
                 val navController = rememberNavController()
                 Scaffold(bottomBar = {
@@ -34,7 +33,7 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Box(Modifier.fillMaxSize()){
-                            BottomBarNavGraph(navController = navController, sharedViewModel)
+                            BottomBarNavGraph(navController = navController)
                         }
 
                     }

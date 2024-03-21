@@ -7,13 +7,12 @@ import kotlinx.coroutines.flow.StateFlow
 import ru.yasdev.details.models.BaseDetails
 
 @Composable
-fun DetailsScreen(baseDetails: StateFlow<BaseDetails?>) {
-    val details = baseDetails.collectAsState()
-    if (details.value != null){
-        Text(text = details.value!!.title)
+fun DetailsScreen(id: String?) {
+    if (id != null){
+        Text(text = id)
     }
     else{
-        Text(text = "Загрузка")
+        Text(text = "Возникла непредвиденная ошибка")
     }
 
 

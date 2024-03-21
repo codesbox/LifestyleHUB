@@ -38,7 +38,7 @@ import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 @Composable
 fun RecommendationsFeed(
     locationState: MutableState<LocationState>,
-    navigateToDetails: (RecommendationModel) -> Unit
+    navigateToDetails: (id: String) -> Unit
 ) {
 
     val viewModel = koinViewModel<RecommendationsFeedViewModel>()
@@ -108,7 +108,7 @@ private fun Feed(
     state: RecommendationsFeedState,
     viewModel: RecommendationsFeedViewModel,
     lazyColumnListState: LazyListState,
-    navigateToDetails: (RecommendationModel) -> Unit
+    navigateToDetails: (id: String) -> Unit
 ) {
     LazyColumn(state = lazyColumnListState) {
         items((state as RecommendationsFeedState.Model).list) { item ->
@@ -117,7 +117,7 @@ private fun Feed(
                     .fillMaxWidth()
                     .padding(start = 15.dp, top = 15.dp, end = 15.dp)
                     .clickable {
-                               navigateToDetails(item)
+                               navigateToDetails(item.id)
                     },
             ) {
                 Text(

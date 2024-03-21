@@ -10,7 +10,6 @@ import androidx.navigation.navigation
 import kotlinx.coroutines.flow.StateFlow
 import ru.yasdev.details.models.BaseDetails
 import ru.yasdev.details.presentation.DetailsScreen
-import ru.yasdev.lifestylehub.activity.SharedViewModel
 import ru.yasdev.lifestylehub.screens.home.HomeScreen
 import ru.yasdev.lifestylehub.screens.myLeisure.LeisureScreen
 import ru.yasdev.lifestylehub.screens.profile.ProfileScreen
@@ -25,24 +24,22 @@ sealed class Destinations(
     val route: String
 ) {
     data object HomeScreenRoute : Destinations(route = "home")
-    data object DetailsScreenRoute : Destinations(route = "details")
+    data object DetailsScreenRoute : Destinations(route = "details/{id}")
     data object LeisureScreenRoute : Destinations(route = "leisure")
     data object ProfileScreenRoute : Destinations(route = "profile")
 
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    navController: NavHostController,
-    baseDetails: StateFlow<BaseDetails?>,
-    setBaseDetails: (details: BaseDetails) -> Unit
+    navController: NavHostController
 ) {
     navigation(
         startDestination = Destinations.HomeScreenRoute.route, route = HOME_GRAPH_ROUTE
     ) {
-        composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController, setBaseDetails) }
-        composable(route = Destinations.DetailsScreenRoute.route) {
-            DetailsScreen(baseDetails = baseDetails)
-
+        composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController) }
+        composable(route = Destinations.DetailsScreenRoute.route) {backStackEntry ->
+            println(backStackEntry.arguments?.getString("id"))
+            DetailsScreen(backStackEntry.arguments?.getString("id"))
         }
     }
 }
@@ -80,15 +77,14 @@ fun NavController.navigateBetweenGraphs(graphName: String) {
 
 @Composable
 fun BottomBarNavGraph(
-    navController: NavHostController,
-    sharedViewModel: SharedViewModel
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
         startDestination = HOME_GRAPH_ROUTE,
         route = BOTTOM_NAV_GRAPH_ROUTE
     ) {
-        homeNavGraph(navController, sharedViewModel.baseDetails, sharedViewModel::setBaseDetails)
+        homeNavGraph(navController)
         myLeisureNavGraph(navController)
         profileNavGraph(navController)
     }
