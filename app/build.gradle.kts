@@ -77,4 +77,6 @@ dependencies {
     implementation(project(":features:recommendations_feed"))
     implementation(project(":data:recommendations_feed"))
     implementation(project(":common"))
+    implementation(project(":data:details"))
+    implementation(project(":features:details"))
 }
