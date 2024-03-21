@@ -7,7 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import ru.yasdev.lifestylehub.screens.home.DetailsScreen
+import kotlinx.coroutines.flow.StateFlow
+import ru.yasdev.details.models.BaseDetails
+import ru.yasdev.details.presentation.DetailsScreen
+import ru.yasdev.lifestylehub.activity.SharedViewModel
 import ru.yasdev.lifestylehub.screens.home.HomeScreen
 import ru.yasdev.lifestylehub.screens.myLeisure.LeisureScreen
 import ru.yasdev.lifestylehub.screens.profile.ProfileScreen
@@ -29,14 +32,17 @@ sealed class Destinations(
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    baseDetails: StateFlow<BaseDetails?>,
+    setBaseDetails: (details: BaseDetails) -> Unit
 ) {
     navigation(
         startDestination = Destinations.HomeScreenRoute.route, route = HOME_GRAPH_ROUTE
     ) {
-        composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController) }
+        composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController, setBaseDetails) }
         composable(route = Destinations.DetailsScreenRoute.route) {
-            DetailsScreen()
+            DetailsScreen(baseDetails = baseDetails)
+
         }
     }
 }
@@ -74,14 +80,15 @@ fun NavController.navigateBetweenGraphs(graphName: String) {
 
 @Composable
 fun BottomBarNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedViewModel: SharedViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = HOME_GRAPH_ROUTE,
         route = BOTTOM_NAV_GRAPH_ROUTE
     ) {
-        homeNavGraph(navController)
+        homeNavGraph(navController, sharedViewModel.baseDetails, sharedViewModel::setBaseDetails)
         myLeisureNavGraph(navController)
         profileNavGraph(navController)
     }

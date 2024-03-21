@@ -1,6 +1,7 @@
 package ru.yasdev.recommendations_feed.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,11 +31,15 @@ import coil.compose.rememberAsyncImagePainter
 import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.common.LocationState
 import ru.yasdev.recommendations_feed.models.FeedEvent
+import ru.yasdev.recommendations_feed.models.RecommendationModel
 import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 
 @Composable
-fun RecommendationsFeed(locationState: MutableState<LocationState>) {
+fun RecommendationsFeed(
+    locationState: MutableState<LocationState>,
+    navigateToDetails: (RecommendationModel) -> Unit
+) {
 
     val viewModel = koinViewModel<RecommendationsFeedViewModel>()
     val lazyColumnListState = rememberLazyListState()
@@ -79,7 +84,8 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>) {
             Feed(
                 state = state.value,
                 viewModel = viewModel,
-                lazyColumnListState = lazyColumnListState
+                lazyColumnListState = lazyColumnListState,
+                navigateToDetails
             )
         }
 
@@ -101,7 +107,8 @@ fun RecommendationsFeed(locationState: MutableState<LocationState>) {
 private fun Feed(
     state: RecommendationsFeedState,
     viewModel: RecommendationsFeedViewModel,
-    lazyColumnListState: LazyListState
+    lazyColumnListState: LazyListState,
+    navigateToDetails: (RecommendationModel) -> Unit
 ) {
     LazyColumn(state = lazyColumnListState) {
         items((state as RecommendationsFeedState.Model).list) { item ->
@@ -109,6 +116,9 @@ private fun Feed(
                 Modifier
                     .fillMaxWidth()
                     .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+                    .clickable {
+                               navigateToDetails(item)
+                    },
             ) {
                 Text(
                     text = item.title,

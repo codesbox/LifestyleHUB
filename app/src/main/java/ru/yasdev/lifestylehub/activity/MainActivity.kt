@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.lifestylehub.components.MainNavigationBar
 import ru.yasdev.lifestylehub.navigation.BottomBarNavGraph
 import ru.yasdev.lifestylehub.ui.theme.LifestyleHUBTheme
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val sharedViewModel = koinViewModel<SharedViewModel>()
             LifestyleHUBTheme {
                 val navController = rememberNavController()
                 Scaffold(bottomBar = {
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Box(Modifier.fillMaxSize()){
-                            BottomBarNavGraph(navController = navController)
+                            BottomBarNavGraph(navController = navController, sharedViewModel)
                         }
 
                     }
