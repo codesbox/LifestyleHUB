@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     kotlin("plugin.serialization") version "1.9.23"
+    kotlin("kapt")
 }
 
 android {
@@ -45,5 +46,10 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
     implementation(project(":features:details"))
 }

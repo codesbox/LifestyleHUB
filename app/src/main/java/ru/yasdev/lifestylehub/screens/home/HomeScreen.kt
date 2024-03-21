@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.common.LocationState
-import ru.yasdev.details.models.BaseDetails
 import ru.yasdev.lifestylehub.components.GetLocation
 import ru.yasdev.lifestylehub.navigation.Destinations
 import ru.yasdev.recommendations_feed.models.RecommendationModel

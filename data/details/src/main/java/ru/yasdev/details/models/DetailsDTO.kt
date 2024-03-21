@@ -1,4 +1,19 @@
 package ru.yasdev.details.models
 
-class DetailsDTO {
-}
+import kotlinx.serialization.Serializable
+@Serializable
+data class DetailsDTO(
+    val name: String = "",
+    val fsq_id: String,
+    val categories: List<Category> = emptyList(),
+    val location: PlaceLocation = PlaceLocation("")
+)
+
+@Serializable
+data class Category(
+    val name: String = ""
+)
+@Serializable
+data class PlaceLocation(
+    val formatted_address: String = ""
+)

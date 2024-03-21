@@ -1,9 +1,10 @@
 package ru.yasdev.details.data
 
-import ru.yasdev.details.models.DetailsModel
+import ru.yasdev.details.models.DetailsState
+
 
 interface DetailsRepository {
 
-    suspend fun getDetails(id: String): DetailsModel
+    suspend fun getDetails(id: String): DetailsState
 
 }

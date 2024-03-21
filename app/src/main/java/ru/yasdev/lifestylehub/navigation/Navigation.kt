@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import kotlinx.coroutines.flow.StateFlow
-import ru.yasdev.details.models.BaseDetails
 import ru.yasdev.details.presentation.DetailsScreen
 import ru.yasdev.lifestylehub.screens.home.HomeScreen
 import ru.yasdev.lifestylehub.screens.myLeisure.LeisureScreen
