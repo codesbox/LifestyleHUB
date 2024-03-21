@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavController, setBaseDetails: (details: BaseDetai
     fun navigateToDetails(recommendationModel: RecommendationModel){
         setBaseDetails(BaseDetails(title = recommendationModel.title,
             address = recommendationModel.address, photoList = recommendationModel.photoList,
-            categories = recommendationModel.categories))
+            categories = recommendationModel.categories, id = recommendationModel.id))
         navController.navigate(Destinations.DetailsScreenRoute.route)
     }
 

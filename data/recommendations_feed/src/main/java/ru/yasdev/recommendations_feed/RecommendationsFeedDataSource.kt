@@ -66,7 +66,8 @@ class RecommendationsFeedDataSource(private val client: HttpClient) {
                             }
                             "${it.prefix}${width}x${height}${it.suffix}"
                         },
-                            categories = recommendation.categories.map{ it.name }
+                            categories = recommendation.categories.map{ it.name },
+                            id = recommendation.fsq_id
                     )
                     )
 
