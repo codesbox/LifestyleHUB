@@ -7,6 +7,8 @@ import ru.yasdev.auth.di.authDataModule
 import ru.yasdev.details.di.detailsDataModule
 import ru.yasdev.details.di.detailsModule
 import ru.yasdev.lifestylehub.di.appModule
+import ru.yasdev.planner.di.plannerDataModule
+import ru.yasdev.planner.di.plannerModule
 import ru.yasdev.profile.di.profileModule
 import ru.yasdev.recommendations_feed.di.recommendationsFeedDataModule
 import ru.yasdev.recommendations_feed.di.recommendationsFeedModule
@@ -32,7 +34,9 @@ class App : Application() {
                     signInModule,
                     signUpModule,
                     profileModule,
-                    authDataModule
+                    authDataModule,
+                    plannerModule,
+                    plannerDataModule
                 )
             )
         }

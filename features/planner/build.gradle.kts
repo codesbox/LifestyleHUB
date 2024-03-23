@@ -1,23 +1,17 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
-    namespace = "ru.yasdev.lifestylehub"
+    namespace = "ru.yasdev.planner"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "ru.yasdev.lifestylehub"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,16 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+    buildFeatures {
+        compose = true
     }
 }
 
@@ -59,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,22 +57,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.play.services.location)
+    implementation(libs.coil.compose)
 
-    implementation(project(":features:weather"))
-    implementation(project(":data:weather"))
-    implementation(project(":features:recommendations_feed"))
-    implementation(project(":data:recommendations_feed"))
-    implementation(project(":common"))
-    implementation(project(":data:details"))
-    implementation(project(":features:details"))
-    implementation(project(":features:auth:sign_in"))
-    implementation(project(":features:auth:sign_up"))
-    implementation(project(":features:auth:profile"))
-    implementation(project(":data:auth"))
-    implementation(project(":features:planner"))
-    implementation(project(":data:planner"))
+    implementation(libs.koin.androidx.compose)
 }
