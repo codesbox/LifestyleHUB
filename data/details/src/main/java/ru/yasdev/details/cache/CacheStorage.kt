@@ -31,7 +31,6 @@ class CacheStorage(context: Context) {
             db.dao.insert(details.toCacheEntity())
         }
         catch (e: Exception){
-            print("Все плохо")
         }
 
     }

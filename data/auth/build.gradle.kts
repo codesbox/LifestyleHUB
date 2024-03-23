@@ -50,6 +50,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
+
     implementation(project(":features:auth:sign_in"))
     implementation(project(":features:auth:sign_up"))
     implementation(project(":features:auth:profile"))
