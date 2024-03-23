@@ -1,5 +1,6 @@
 package ru.yasdev.lifestylehub.screens.profile
 
+import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,25 +18,21 @@ import ru.yasdev.sign_up.navigation.SignUpNavigator
 
 @Composable
 fun MainProfileScreen(navController: NavHostController) {
+    Log.d("QWE", "MPS")
 
     val viewModel = koinViewModel<MainProfileViewModel>()
+    viewModel.setState()
     val state = viewModel.state.collectAsState().value
 
-    fun signUpNavigation(navigator: SignUpNavigator){
-        when(navigator){
-            SignUpNavigator.PopBackStack -> {
-                navController.popBackStack()
-            }
-            SignUpNavigator.ToBeginningGraph -> {
-                navController.navigate(PROFILE_GRAPH_ROUTE)
-            }
-        }
-    }
 
     fun signInNavigation(navigator: SignInNavigator){
         when(navigator){
             SignInNavigator.ToBeginningGraph -> {
-                navController.navigate(PROFILE_GRAPH_ROUTE)
+                navController.navigate(Destinations.MainProfileScreenRoute.route){
+                    popUpTo(Destinations.MainProfileScreenRoute.route){
+                        inclusive = true
+                    }
+                }
             }
             SignInNavigator.ToSignUpScreen -> {
                 navController.navigate(Destinations.SignUpScreenRoute.route)
@@ -46,7 +43,11 @@ fun MainProfileScreen(navController: NavHostController) {
     fun profileNavigation(navigator: ProfileNavigator){
         when(navigator){
             ProfileNavigator.ToBeginningGraph -> {
-                navController.navigate(PROFILE_GRAPH_ROUTE)
+                navController.navigate(Destinations.MainProfileScreenRoute.route){
+                    popUpTo(Destinations.MainProfileScreenRoute.route){
+                        inclusive = true
+                    }
+                }
             }
         }
     }
@@ -56,10 +57,10 @@ fun MainProfileScreen(navController: NavHostController) {
             Text(text = "загрузка")
         }
         MainProfileState.Profile -> {
-            navController.navigate(Destinations.ProfileScreenRoute.route)
+            ProfileScreen(::profileNavigation)
         }
         MainProfileState.SignIn -> {
-            navController.navigate(Destinations.SignInScreenRoute.route)
+            SignInScreen(::signInNavigation)
         }
     }
 

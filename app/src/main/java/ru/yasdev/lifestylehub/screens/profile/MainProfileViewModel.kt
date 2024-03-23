@@ -15,7 +15,7 @@ class MainProfileViewModel(
     private val _state = MutableStateFlow<MainProfileState>(MainProfileState.Loading)
     val state = _state.asStateFlow()
 
-    init {
+    fun setState() {
         viewModelScope.launch {
             val id = getIdUseCase.execute()
             if (id == null){

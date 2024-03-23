@@ -74,15 +74,10 @@ fun NavGraphBuilder.profileNavGraph(
                     navController.popBackStack()
                 }
                 SignUpNavigator.ToBeginningGraph -> {
-                    navController.navigate(PROFILE_GRAPH_ROUTE){
-                        popUpTo(
-                            navController.graph.startDestinationId
-                        ){
+                    navController.navigate(Destinations.MainProfileScreenRoute.route){
+                        popUpTo(Destinations.MainProfileScreenRoute.route){
                             inclusive = true
-                            saveState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             }
@@ -91,15 +86,10 @@ fun NavGraphBuilder.profileNavGraph(
         fun signInNavigation(navigator: SignInNavigator){
             when(navigator){
                 SignInNavigator.ToBeginningGraph -> {
-                    navController.navigate(PROFILE_GRAPH_ROUTE){
-                        popUpTo(
-                            navController.graph.startDestinationId
-                        ){
+                    navController.navigate(Destinations.MainProfileScreenRoute.route){
+                        popUpTo(Destinations.MainProfileScreenRoute.route){
                             inclusive = true
-                            saveState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
                 SignInNavigator.ToSignUpScreen -> {
@@ -112,14 +102,9 @@ fun NavGraphBuilder.profileNavGraph(
             when(navigator){
                 ProfileNavigator.ToBeginningGraph -> {
                     navController.navigate(Destinations.MainProfileScreenRoute.route){
-                        popUpTo(
-                            navController.graph.startDestinationId
-                        ){
+                        popUpTo(Destinations.MainProfileScreenRoute.route){
                             inclusive = true
-                            saveState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             }
