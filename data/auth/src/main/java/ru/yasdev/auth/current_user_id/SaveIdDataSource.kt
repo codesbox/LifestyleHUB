@@ -1,28 +1,28 @@
 package ru.yasdev.auth.current_user_id
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
+import ru.yasdev.auth.dataBase.AuthDataBase
+import ru.yasdev.auth.dataBase.models.UserIdEntity
 
 class SaveIdDataSource(private val context: Context) {
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "dataStore")
+    private val db =
+        Room.databaseBuilder(
+            context,
+            AuthDataBase::class.java,
+            "auth.db"
+        ).build()
 
     suspend fun saveId(id: String?){
         when (id) {
             null -> {
-                context.dataStore.edit { pref ->
-                    pref[stringPreferencesKey("LastId")] = "null"
-                }
+                db.userIdDao.deleteAll()
             }
 
             else -> {
-                context.dataStore.edit { pref ->
-                    pref[stringPreferencesKey("LastId")] = id.toString()
-                }
+                db.userIdDao.deleteAll()
+                db.userIdDao.insertId(UserIdEntity(id))
             }
         }
     }

@@ -12,9 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.sign_up.models.SignUpState
+import ru.yasdev.sign_up.navigation.SignUpNavigator
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navigator: (SignUpNavigator) -> Unit) {
     val viewModel = koinViewModel<SignUpViewModel>()
     val state = viewModel.signUpState.collectAsState().value
     var password by remember {
@@ -38,8 +39,11 @@ fun SignUpScreen() {
             }
             SignUpState.SignUp -> {}
             SignUpState.Success -> {
-                Text(text = "Success")
+                navigator(SignUpNavigator.ToBeginningGraph)
             }
+        }
+        Button(onClick = { navigator(SignUpNavigator.PopBackStack) }) {
+            Text(text = "Назад")
         }
     }
 }

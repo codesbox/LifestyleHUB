@@ -15,7 +15,7 @@ class SignInDataSource(private val context: Context, private val saveIdRepositor
             "auth.db"
         ).build()
     suspend fun signIn(login: String, password: String): SignInState {
-        val user = db.dao.get(login = login, password = password)
+        val user = db.dao.getUserByPassword(login = login, password = password)
         return if(user != null){
             saveIdRepository.saveId(user.login)
             SignInState.Success

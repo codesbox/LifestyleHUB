@@ -7,11 +7,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import kotlinx.coroutines.flow.StateFlow
 import ru.yasdev.details.presentation.DetailsScreen
 import ru.yasdev.lifestylehub.screens.home.HomeScreen
 import ru.yasdev.lifestylehub.screens.myLeisure.LeisureScreen
-import ru.yasdev.lifestylehub.screens.profile.ProfileScreen
+import ru.yasdev.lifestylehub.screens.profile.MainProfileScreen
+import ru.yasdev.profile.navigation.ProfileNavigator
+import ru.yasdev.profile.presentation.ProfileScreen
+import ru.yasdev.sign_in.navigation.SignInNavigator
+import ru.yasdev.sign_in.presentation.SignInScreen
+import ru.yasdev.sign_up.SignUpScreen
+import ru.yasdev.sign_up.navigation.SignUpNavigator
 
 
 const val BOTTOM_NAV_GRAPH_ROUTE = "btn_nav_graph"
@@ -25,6 +30,9 @@ sealed class Destinations(
     data object HomeScreenRoute : Destinations(route = "home")
     data object DetailsScreenRoute : Destinations(route = "details/{id}")
     data object LeisureScreenRoute : Destinations(route = "leisure")
+    data object MainProfileScreenRoute : Destinations(route = "mainProfile")
+    data object SignInScreenRoute : Destinations(route = "signIn")
+    data object SignUpScreenRoute : Destinations(route = "signUp")
     data object ProfileScreenRoute : Destinations(route = "profile")
 
 }
@@ -57,9 +65,70 @@ fun NavGraphBuilder.profileNavGraph(
     navController: NavHostController
 ) {
     navigation(
-        startDestination = Destinations.ProfileScreenRoute.route, route = PROFILE_GRAPH_ROUTE
+        startDestination = Destinations.MainProfileScreenRoute.route, route = PROFILE_GRAPH_ROUTE
     ) {
-        composable(route = Destinations.ProfileScreenRoute.route) { ProfileScreen(navController) }
+
+        fun signUpNavigation(navigator: SignUpNavigator){
+            when(navigator){
+                SignUpNavigator.PopBackStack -> {
+                    navController.popBackStack()
+                }
+                SignUpNavigator.ToBeginningGraph -> {
+                    navController.navigate(PROFILE_GRAPH_ROUTE){
+                        popUpTo(
+                            navController.graph.startDestinationId
+                        ){
+                            inclusive = true
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
+        }
+
+        fun signInNavigation(navigator: SignInNavigator){
+            when(navigator){
+                SignInNavigator.ToBeginningGraph -> {
+                    navController.navigate(PROFILE_GRAPH_ROUTE){
+                        popUpTo(
+                            navController.graph.startDestinationId
+                        ){
+                            inclusive = true
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+                SignInNavigator.ToSignUpScreen -> {
+                    navController.navigate(Destinations.SignUpScreenRoute.route)
+                }
+            }
+        }
+
+        fun profileNavigation(navigator: ProfileNavigator){
+            when(navigator){
+                ProfileNavigator.ToBeginningGraph -> {
+                    navController.navigate(Destinations.MainProfileScreenRoute.route){
+                        popUpTo(
+                            navController.graph.startDestinationId
+                        ){
+                            inclusive = true
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
+        }
+
+        composable(route = Destinations.MainProfileScreenRoute.route) { MainProfileScreen(navController) }
+        composable(route = Destinations.SignInScreenRoute.route){ SignInScreen(::signInNavigation) }
+        composable(route = Destinations.SignUpScreenRoute.route){ SignUpScreen(::signUpNavigation)}
+        composable(route = Destinations.ProfileScreenRoute.route){ ProfileScreen(::profileNavigation) }
     }
 }
 

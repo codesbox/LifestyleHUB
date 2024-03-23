@@ -12,9 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.sign_in.models.SignInState
+import ru.yasdev.sign_in.navigation.SignInNavigator
 
 @Composable
-fun SignInScreen(){
+fun SignInScreen(navigator: (SignInNavigator) -> Unit) {
     val viewModel = koinViewModel<SignInViewModel>()
     val state = viewModel.signInState.collectAsState().value
     var login by remember {
@@ -33,7 +34,7 @@ fun SignInScreen(){
         Button(onClick = {
             viewModel.signIn(login, password)
         }) {
-
+            Text(text = "Войти")
         }
         when(state){
             SignInState.UserNotFound -> {
@@ -44,8 +45,11 @@ fun SignInScreen(){
             }
             SignInState.SignIn -> {}
             SignInState.Success -> {
-                Text(text = "Success")
+                navigator(SignInNavigator.ToBeginningGraph)
             }
+        }
+        Button(onClick = { navigator(SignInNavigator.ToSignUpScreen) }) {
+            Text(text = "Регистрация")
         }
     }
 }
