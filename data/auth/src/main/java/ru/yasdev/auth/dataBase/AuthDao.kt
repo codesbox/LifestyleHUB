@@ -10,6 +10,6 @@ interface AuthDao {
     @Upsert
     suspend fun insert(model: AuthEntity)
 
-    @Query("SELECT * FROM AuthEntity WHERE login = :login")
-    suspend fun get(login: String): AuthEntity?
+    @Query("SELECT * FROM AuthEntity WHERE login = :login AND password = :password")
+    suspend fun get(login: String, password: String): AuthEntity?
 }

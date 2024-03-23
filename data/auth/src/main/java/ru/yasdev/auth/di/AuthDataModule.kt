@@ -5,8 +5,11 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import ru.yasdev.auth.current_user_id.SaveIdDataSource
 import ru.yasdev.auth.current_user_id.SaveIdRepositoryImpl
+import ru.yasdev.auth.sign_in.SignInDataSource
+import ru.yasdev.auth.sign_in.SignInRepositoryImpl
 import ru.yasdev.auth.sign_up.SignUpDataSource
 import ru.yasdev.auth.sign_up.SignUpRepositoryImpl
+import ru.yasdev.sign_in.data.SignInRepository
 import ru.yasdev.sign_up.data.SaveIdRepository
 import ru.yasdev.sign_up.data.SignUpRepository
 
@@ -15,5 +18,7 @@ val authDataModule = module {
     singleOf(::SignUpRepositoryImpl){bind<SignUpRepository>()}
     singleOf(::SaveIdRepositoryImpl){bind<SaveIdRepository>()}
     singleOf(::SaveIdDataSource){bind<SaveIdDataSource>()}
+    singleOf(::SignInRepositoryImpl){bind<SignInRepository>()}
+    singleOf(::SignInDataSource){bind<SignInDataSource>()}
 
 }

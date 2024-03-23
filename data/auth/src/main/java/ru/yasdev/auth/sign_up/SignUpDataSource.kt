@@ -34,6 +34,7 @@ class SignUpDataSource(private val client: HttpClient, context: Context, private
             println(result)
             val signUpDTO: SignUpDTO = json.decodeFromString<SignUpDTO>(string = result)
             println(signUpDTO)
+            println(signUpDTO)
             db.dao.insert(AuthEntity(
                 login = signUpDTO.login.username,
                 password = password,
