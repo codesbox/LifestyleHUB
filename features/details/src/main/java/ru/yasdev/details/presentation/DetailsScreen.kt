@@ -4,16 +4,22 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -37,7 +43,7 @@ import ru.yasdev.details.models.DetailsState
 
 
 @Composable
-fun DetailsScreen(id: String?) {
+fun DetailsScreen(id: String?, popBackStack: () -> Unit) {
     val viewModel = koinViewModel<DetailsScreenViewModel>()
     val state = viewModel.detailsState.collectAsState().value
     val buttonState = viewModel.addButtonState.collectAsState().value
@@ -52,11 +58,16 @@ fun DetailsScreen(id: String?) {
         when (state) {
             is DetailsState.Details -> {
                 Column {
-                    Text(
-                        text = state.title,
-                        fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                        modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(top = 15.dp)) {
+                        IconButton(onClick = { popBackStack() }, Modifier.padding(horizontal = 15.dp)) {
+                            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
+                        }
+                        Text(
+                            text = state.title,
+                            fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                            modifier = Modifier.padding(horizontal = 15.dp)
+                        )
+                    }
                     if (state.photoList.isNotEmpty()) {
                         LazyRow {
                             items(state.photoList) {
