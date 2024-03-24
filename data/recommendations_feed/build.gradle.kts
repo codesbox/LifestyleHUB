@@ -46,4 +46,5 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":features:recommendations_feed"))
+    implementation(project(":common"))
 }

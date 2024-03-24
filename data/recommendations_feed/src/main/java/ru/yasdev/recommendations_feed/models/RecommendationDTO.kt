@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RecommendationDTO(
     val name: String = "",
-    val fsq_id: String,
+    @SerialName("fsq_id") val fsqId: String,
     val categories: List<RecommendationCategory> = emptyList(),
     val location: RecommendationLocation = RecommendationLocation("")
 
@@ -16,7 +16,8 @@ data class RecommendationDTO(
 data class RecommendationCategory(
     val name: String = ""
 )
+
 @Serializable
 data class RecommendationLocation(
-    val formatted_address: String = ""
+    @SerialName("formatted_address") val formattedAddress: String = ""
 )

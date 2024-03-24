@@ -9,6 +9,6 @@ import ru.yasdev.recommendations_feed.data.RecommendationsFeedRepository
 
 val recommendationsFeedDataModule = module {
 
-    singleOf(::RecommendationsFeedDataSource){bind<RecommendationsFeedDataSource>()}
-    singleOf(::RecommendationsFeedRepositoryImpl){bind<RecommendationsFeedRepository>()}
+    singleOf(::RecommendationsFeedDataSource) { bind<RecommendationsFeedDataSource>() }
+    singleOf(::RecommendationsFeedRepositoryImpl) { bind<RecommendationsFeedRepository>() }
 }
