@@ -10,7 +10,7 @@ import ru.yasdev.planner.PlannerStorage
 import ru.yasdev.planner.data.PlannerRepository
 
 val plannerDataModule = module {
-    singleOf(::PlannerStorage){bind<PlannerStorage>()}
-    singleOf(::PlannerRepositoryImpl){bind<PlannerRepository>()}
-    singleOf(::AddEventFromDetailsRepositoryImpl){bind<AddEventFromDetailsRepository>()}
+    singleOf(::PlannerStorage) { bind<PlannerStorage>() }
+    singleOf(::PlannerRepositoryImpl) { bind<PlannerRepository>() }
+    singleOf(::AddEventFromDetailsRepositoryImpl) { bind<AddEventFromDetailsRepository>() }
 }

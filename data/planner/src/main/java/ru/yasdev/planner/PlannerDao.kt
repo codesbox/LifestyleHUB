@@ -11,6 +11,7 @@ interface PlannerDao {
 
     @Query("SELECT * FROM event_entity WHERE userId = :userId")
     suspend fun get(userId: String): List<EventEntity>
+
     @Query("DELETE FROM event_entity WHERE eventId = :eventId")
     suspend fun delete(eventId: Int)
 

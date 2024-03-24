@@ -3,34 +3,29 @@ package ru.yasdev.planner
 import android.content.Context
 import androidx.room.Room
 import ru.yasdev.common.GetUserIdRepository
+import ru.yasdev.planner.mappers.toEventEntity
 import ru.yasdev.planner.mappers.toEventModel
-import ru.yasdev.planner.models.EventModel
 import ru.yasdev.planner.models.NewEventModel
 import ru.yasdev.planner.models.PlannerState
 
-class PlannerStorage(private val context: Context, private val getUserIdRepository: GetUserIdRepository) {
+class PlannerStorage(context: Context, private val getUserIdRepository: GetUserIdRepository) {
 
-    private val db =
-        Room.databaseBuilder(
-            context,
-            PlannerDataBase::class.java,
-            "planner.db"
-        ).build()
+    private val db = Room.databaseBuilder(
+        context, PlannerDataBase::class.java, Constants.DB_NAME
+    ).build()
 
 
     suspend fun getEvents(): PlannerState {
-        return try{
+        return try {
             val userId = getUserIdRepository.getId()
-            if(userId != null){
+            if (userId != null) {
                 val list = db.dao.get(userId)
                 val result = list.map { it.toEventModel() }
                 PlannerState.Planner(result)
-            }
-            else{
+            } else {
                 PlannerState.UserNotFound
             }
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             PlannerState.ErrorOnReceipt
         }
     }
@@ -40,13 +35,7 @@ class PlannerStorage(private val context: Context, private val getUserIdReposito
         val userId = getUserIdRepository.getId()
 
         db.dao.insert(
-            EventEntity(
-            title = eventModel.title,
-            note = eventModel.note,
-            link = eventModel.link,
-            date = eventModel.date,
-            userId = userId!!
-        )
+            eventModel.toEventEntity(userId!!)
         )
     }
 
