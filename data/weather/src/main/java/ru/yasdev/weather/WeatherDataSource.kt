@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 import ru.yasdev.common.CommonConstants
 import ru.yasdev.weather.mappers.toWeatherModel
-import ru.yasdev.weather.models.Weather
+import ru.yasdev.weather.models.WeatherState
 import ru.yasdev.weather.models.WeatherDTO
 
 
@@ -28,11 +28,11 @@ class WeatherDataSource(private val client: HttpClient) {
                     weatherDto.toWeatherModel()
                 )
             } catch (e: Exception) {
-                emit(Weather.ErrorOnReceipt)
+                emit(WeatherState.ErrorOnReceipt)
             }
 
         } else {
-            emit(Weather.ErrorOnReceipt)
+            emit(WeatherState.ErrorOnReceipt)
         }
     }
 }

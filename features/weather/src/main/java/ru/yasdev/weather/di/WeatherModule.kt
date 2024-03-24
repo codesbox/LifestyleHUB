@@ -9,5 +9,5 @@ import ru.yasdev.weather.presentation.WeatherViewModel
 
 val weatherModule = module {
     viewModelOf(::WeatherViewModel)
-    factoryOf(::GetWeatherUseCase) {bind<GetWeatherUseCase>()}
+    factoryOf(::GetWeatherUseCase) { bind<GetWeatherUseCase>() }
 }

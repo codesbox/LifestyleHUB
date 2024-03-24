@@ -1,8 +1,8 @@
 package ru.yasdev.weather.models
 
-sealed interface Weather {
-    data object Loading : Weather
-    data object NoPermissions : Weather
+sealed interface WeatherState {
+    data object Loading : WeatherState
+    data object NoPermissions : WeatherState
     data class Model(
         val temp: String,
         val icon: String,
@@ -11,6 +11,7 @@ sealed interface Weather {
         val feelLike: String,
         val title: String,
         val city: String
-    ) : Weather
-    data object ErrorOnReceipt: Weather
+    ) : WeatherState
+
+    data object ErrorOnReceipt : WeatherState
 }

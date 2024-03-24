@@ -1,11 +1,11 @@
 package ru.yasdev.weather.mappers
 
-import ru.yasdev.weather.models.Weather
+import ru.yasdev.weather.models.WeatherState
 import ru.yasdev.weather.models.WeatherDTO
 import kotlin.math.roundToInt
 
-fun WeatherDTO.toWeatherModel(): Weather.Model {
-    return Weather.Model(
+fun WeatherDTO.toWeatherModel(): WeatherState.Model {
+    return WeatherState.Model(
         temp = main.temp.roundToInt().toString(),
         minTemp = main.minTemp.roundToInt().toString(),
         maxTemp = main.maxTemp.roundToInt().toString(),
