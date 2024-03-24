@@ -2,11 +2,10 @@ package ru.yasdev.profile.domain
 
 import ru.yasdev.profile.data.ProfileRepository
 
-class LogOutUseCase(
+internal class LogOutUseCase(
     private val profileRepository: ProfileRepository
 ) {
-
-    suspend fun execute(){
+    suspend fun execute() {
         profileRepository.logOut()
     }
 

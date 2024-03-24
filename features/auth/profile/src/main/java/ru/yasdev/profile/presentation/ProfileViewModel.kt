@@ -10,21 +10,20 @@ import ru.yasdev.profile.domain.LogOutUseCase
 import ru.yasdev.profile.models.ProfileState
 import ru.yasdev.profile.navigation.ProfileNavigator
 
-class ProfileViewModel(
-    private val getUserUseCase: GetUserUseCase,
-    private val logOutUseCase: LogOutUseCase
-): ViewModel() {
+internal class ProfileViewModel(
+    private val getUserUseCase: GetUserUseCase, private val logOutUseCase: LogOutUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow<ProfileState>(ProfileState.Loading)
     val state = _state.asStateFlow()
 
-    init{
+    init {
         viewModelScope.launch {
             _state.value = getUserUseCase.execute()
         }
     }
 
-    fun logOut(navigator: (ProfileNavigator) -> Unit){
+    fun logOut(navigator: (ProfileNavigator) -> Unit) {
         viewModelScope.launch {
             logOutUseCase.execute()
             navigator(ProfileNavigator.ToBeginningGraph)

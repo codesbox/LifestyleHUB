@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SignUpDTO(
-    val name: Name, val login: Login
+    val name: Name, val login: Login, val picture: Image
 
 )
 
@@ -16,5 +16,10 @@ data class Name(
 @Serializable
 data class Login(
     val username: String
+)
+
+@Serializable
+data class Image(
+    val medium: String
 )
 
