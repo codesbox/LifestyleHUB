@@ -11,7 +11,7 @@ import ru.yasdev.planner.presentation.PlannerViewModel
 
 val plannerModule = module {
     viewModelOf(::PlannerViewModel)
-    factoryOf(::AddEventUseCase){bind<AddEventUseCase>()}
-    factoryOf(::DeleteEventUseCase){bind<DeleteEventUseCase>()}
-    factoryOf(::GetEventsUseCase){bind<GetEventsUseCase>()}
+    factoryOf(::AddEventUseCase) { bind<AddEventUseCase>() }
+    factoryOf(::DeleteEventUseCase) { bind<DeleteEventUseCase>() }
+    factoryOf(::GetEventsUseCase) { bind<GetEventsUseCase>() }
 }

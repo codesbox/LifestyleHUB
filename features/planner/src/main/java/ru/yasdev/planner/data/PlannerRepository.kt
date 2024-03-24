@@ -1,6 +1,5 @@
 package ru.yasdev.planner.data
 
-import ru.yasdev.planner.models.EventModel
 import ru.yasdev.planner.models.NewEventModel
 import ru.yasdev.planner.models.PlannerState
 

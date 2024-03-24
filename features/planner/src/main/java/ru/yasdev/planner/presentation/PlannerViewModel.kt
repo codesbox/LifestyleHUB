@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import ru.yasdev.planner.domain.AddEventUseCase
 import ru.yasdev.planner.domain.DeleteEventUseCase
 import ru.yasdev.planner.domain.GetEventsUseCase
-import ru.yasdev.planner.models.EventModel
 import ru.yasdev.planner.models.NewEventModel
 import ru.yasdev.planner.models.PlannerState
 
@@ -16,24 +15,24 @@ class PlannerViewModel(
     private val addEventUseCase: AddEventUseCase,
     private val deleteEventUseCase: DeleteEventUseCase,
     private val getEventsUseCase: GetEventsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow<PlannerState>(PlannerState.Loading)
     val state = _state.asStateFlow()
-    fun getEvents(){
+    fun getEvents() {
         viewModelScope.launch {
             _state.value = getEventsUseCase.execute()
         }
     }
 
-    fun deleteEvent(eventId: Int){
+    fun deleteEvent(eventId: Int) {
         viewModelScope.launch {
             deleteEventUseCase.execute(eventId)
             _state.value = getEventsUseCase.execute()
         }
     }
 
-    fun addEvent(eventModel: NewEventModel){
+    fun addEvent(eventModel: NewEventModel) {
         viewModelScope.launch {
             addEventUseCase.execute(eventModel)
             _state.value = getEventsUseCase.execute()

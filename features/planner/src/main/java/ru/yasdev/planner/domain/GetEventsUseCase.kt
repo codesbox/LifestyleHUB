@@ -7,7 +7,7 @@ class GetEventsUseCase(
     private val repository: PlannerRepository
 ) {
 
-    suspend fun execute(): PlannerState{
+    suspend fun execute(): PlannerState {
         return repository.getEvents()
     }
 }

@@ -29,7 +29,12 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddEventAlertDialog(openDialog: MutableState<Boolean>, title: MutableState<String?>, date: MutableState<String?>, note: MutableState<String?>) {
+fun AddEventAlertDialog(
+    openDialog: MutableState<Boolean>,
+    title: MutableState<String?>,
+    date: MutableState<String?>,
+    note: MutableState<String?>
+) {
 
     var newTitle by remember {
         mutableStateOf("")
@@ -43,11 +48,9 @@ fun AddEventAlertDialog(openDialog: MutableState<Boolean>, title: MutableState<S
 
     if (openDialog.value) {
 
-        AlertDialog(
-            onDismissRequest = {
-                openDialog.value = false
-            }
-        ) {
+        AlertDialog(onDismissRequest = {
+            openDialog.value = false
+        }) {
             Surface(
                 modifier = Modifier
                     .wrapContentWidth()
@@ -57,34 +60,41 @@ fun AddEventAlertDialog(openDialog: MutableState<Boolean>, title: MutableState<S
             ) {
 
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Новый досуг", fontSize = MaterialTheme.typography.headlineSmall.fontSize)
+                    Text(
+                        text = "Новый досуг",
+                        fontSize = MaterialTheme.typography.headlineSmall.fontSize
+                    )
                     Spacer(modifier = Modifier.height(24.dp))
-                    OutlinedTextField(value = newTitle, onValueChange = {newTitle = it}, label = { Text(text = "Название") })
+                    OutlinedTextField(value = newTitle,
+                        onValueChange = { newTitle = it },
+                        label = { Text(text = "Название") })
                     Spacer(modifier = Modifier.height(24.dp))
-                    OutlinedTextField(value = newDate, onValueChange = {newDate = it}, label = { Text(text = "Дата") })
+                    OutlinedTextField(value = newDate,
+                        onValueChange = { newDate = it },
+                        label = { Text(text = "Дата") })
                     Spacer(modifier = Modifier.height(24.dp))
-                    OutlinedTextField(value = newNote, onValueChange = {newNote = it}, label = { Text(text = "Заметки") })
+                    OutlinedTextField(value = newNote,
+                        onValueChange = { newNote = it },
+                        label = { Text(text = "Заметки")})
                     Spacer(modifier = Modifier.height(24.dp))
-                    Row(horizontalArrangement = Arrangement.End, modifier = Modifier.align(Alignment.End)){
-                        TextButton(
-                            onClick = {
-                                openDialog.value = false
-                            }
-                        ) {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.align(Alignment.End)
+                    ) {
+                        TextButton(onClick = {
+                            openDialog.value = false
+                        }) {
                             Text("Отмена")
                         }
-                        TextButton(
-                            onClick = {
-                                title.value = newTitle
-                                date.value = newDate
-                                note.value = newNote
-                                openDialog.value = false
-                            }
-                        ) {
+                        TextButton(onClick = {
+                            title.value = newTitle
+                            date.value = newDate
+                            note.value = newNote
+                            openDialog.value = false
+                        }) {
                             Text("Добавить")
                         }
                     }
-
                 }
             }
         }
