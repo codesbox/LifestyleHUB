@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entrance">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="error">ВОзникла непредвиденная ошибка</string>
+    <string name="password">Пароль</string>
+</resources>
