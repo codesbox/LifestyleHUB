@@ -8,14 +8,14 @@ import kotlinx.coroutines.launch
 import ru.yasdev.sign_in.domain.SignInUseCase
 import ru.yasdev.sign_in.models.SignInState
 
-class SignInViewModel(
+internal class SignInViewModel(
     private val signInUseCase: SignInUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _signInState = MutableStateFlow<SignInState>(SignInState.SignIn)
     val signInState = _signInState.asStateFlow()
 
-    fun signIn(login: String, password: String){
+    fun signIn(login: String, password: String) {
         _signInState.value = SignInState.Loading
         viewModelScope.launch {
             _signInState.value = signInUseCase.execute(login = login, password = password)

@@ -8,6 +8,6 @@ import ru.yasdev.sign_in.domain.SignInUseCase
 import ru.yasdev.sign_in.presentation.SignInViewModel
 
 val signInModule = module {
-    factoryOf(::SignInUseCase){bind<SignInUseCase>()}
+    factoryOf(::SignInUseCase) { bind<SignInUseCase>() }
     viewModelOf(::SignInViewModel)
 }
