@@ -6,22 +6,17 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
-import org.koin.androidx.compose.koinViewModel
 import ru.yasdev.common.LocationState
 import ru.yasdev.lifestylehub.components.GetLocation
-import ru.yasdev.lifestylehub.navigation.Destinations
-import ru.yasdev.recommendations_feed.models.RecommendationModel
 import ru.yasdev.recommendations_feed.presentation.RecommendationsFeed
 import ru.yasdev.weather.presentation.WeatherWidget
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    fun navigateToDetails(id: String){
+    fun navigateToDetails(id: String) {
         navController.navigate("details/$id")
     }
-
-    val vm = koinViewModel<HomeViewModel>()
 
     val locationState: MutableState<LocationState> = remember {
         mutableStateOf(LocationState.Loading)

@@ -7,10 +7,9 @@ import ru.yasdev.planner.presentation.PlannerScreen
 @Composable
 fun LeisureScreen(navController: NavHostController) {
 
-    fun navigateToDetails(id: String){
+    fun navigateToDetails(id: String) {
         navController.navigate("details/$id")
     }
-
 
     PlannerScreen(::navigateToDetails)
 }

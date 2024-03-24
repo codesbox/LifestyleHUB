@@ -44,7 +44,7 @@ fun NavGraphBuilder.homeNavGraph(
         startDestination = Destinations.HomeScreenRoute.route, route = HOME_GRAPH_ROUTE
     ) {
         composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController) }
-        composable(route = Destinations.DetailsScreenRoute.route) {backStackEntry ->
+        composable(route = Destinations.DetailsScreenRoute.route) { backStackEntry ->
             println(backStackEntry.arguments?.getString("id"))
             DetailsScreen(backStackEntry.arguments?.getString("id"))
         }
@@ -68,14 +68,15 @@ fun NavGraphBuilder.profileNavGraph(
         startDestination = Destinations.MainProfileScreenRoute.route, route = PROFILE_GRAPH_ROUTE
     ) {
 
-        fun signUpNavigation(navigator: SignUpNavigator){
-            when(navigator){
+        fun signUpNavigation(navigator: SignUpNavigator) {
+            when (navigator) {
                 SignUpNavigator.PopBackStack -> {
                     navController.popBackStack()
                 }
+
                 SignUpNavigator.ToBeginningGraph -> {
-                    navController.navigate(Destinations.MainProfileScreenRoute.route){
-                        popUpTo(Destinations.MainProfileScreenRoute.route){
+                    navController.navigate(Destinations.MainProfileScreenRoute.route) {
+                        popUpTo(Destinations.MainProfileScreenRoute.route) {
                             inclusive = true
                         }
                     }
@@ -83,26 +84,27 @@ fun NavGraphBuilder.profileNavGraph(
             }
         }
 
-        fun signInNavigation(navigator: SignInNavigator){
-            when(navigator){
+        fun signInNavigation(navigator: SignInNavigator) {
+            when (navigator) {
                 SignInNavigator.ToBeginningGraph -> {
-                    navController.navigate(Destinations.MainProfileScreenRoute.route){
-                        popUpTo(Destinations.MainProfileScreenRoute.route){
+                    navController.navigate(Destinations.MainProfileScreenRoute.route) {
+                        popUpTo(Destinations.MainProfileScreenRoute.route) {
                             inclusive = true
                         }
                     }
                 }
+
                 SignInNavigator.ToSignUpScreen -> {
                     navController.navigate(Destinations.SignUpScreenRoute.route)
                 }
             }
         }
 
-        fun profileNavigation(navigator: ProfileNavigator){
-            when(navigator){
+        fun profileNavigation(navigator: ProfileNavigator) {
+            when (navigator) {
                 ProfileNavigator.ToBeginningGraph -> {
-                    navController.navigate(Destinations.MainProfileScreenRoute.route){
-                        popUpTo(Destinations.MainProfileScreenRoute.route){
+                    navController.navigate(Destinations.MainProfileScreenRoute.route) {
+                        popUpTo(Destinations.MainProfileScreenRoute.route) {
                             inclusive = true
                         }
                     }
@@ -110,10 +112,14 @@ fun NavGraphBuilder.profileNavGraph(
             }
         }
 
-        composable(route = Destinations.MainProfileScreenRoute.route) { MainProfileScreen(navController) }
-        composable(route = Destinations.SignInScreenRoute.route){ SignInScreen(::signInNavigation) }
-        composable(route = Destinations.SignUpScreenRoute.route){ SignUpScreen(::signUpNavigation)}
-        composable(route = Destinations.ProfileScreenRoute.route){ ProfileScreen(::profileNavigation) }
+        composable(route = Destinations.MainProfileScreenRoute.route) {
+            MainProfileScreen(
+                navController
+            )
+        }
+        composable(route = Destinations.SignInScreenRoute.route) { SignInScreen(::signInNavigation) }
+        composable(route = Destinations.SignUpScreenRoute.route) { SignUpScreen(::signUpNavigation) }
+        composable(route = Destinations.ProfileScreenRoute.route) { ProfileScreen(::profileNavigation) }
     }
 }
 

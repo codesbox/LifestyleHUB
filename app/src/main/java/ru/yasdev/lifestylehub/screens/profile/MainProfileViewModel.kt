@@ -10,7 +10,7 @@ import ru.yasdev.lifestylehub.screens.profile.models.MainProfileState
 
 class MainProfileViewModel(
     private val getIdUseCase: GetIdUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow<MainProfileState>(MainProfileState.Loading)
     val state = _state.asStateFlow()
@@ -18,13 +18,11 @@ class MainProfileViewModel(
     fun setState() {
         viewModelScope.launch {
             val id = getIdUseCase.execute()
-            if (id == null){
+            if (id == null) {
                 _state.value = MainProfileState.SignIn
-            }
-            else{
+            } else {
                 _state.value = MainProfileState.Profile
             }
         }
     }
-
 }

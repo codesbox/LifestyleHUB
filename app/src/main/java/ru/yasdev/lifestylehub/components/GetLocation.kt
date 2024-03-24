@@ -14,7 +14,7 @@ import com.google.android.gms.location.LocationServices
 import ru.yasdev.common.LocationState
 
 @Composable
-fun GetLocation(locationState: MutableState<LocationState>){
+fun GetLocation(locationState: MutableState<LocationState>) {
 
     val context = LocalContext.current
 
@@ -23,8 +23,7 @@ fun GetLocation(locationState: MutableState<LocationState>){
     ) { isGranted: Boolean ->
         if (isGranted) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                     locationState.value = LocationState.Model(location)
                 }
 
@@ -32,21 +31,17 @@ fun GetLocation(locationState: MutableState<LocationState>){
             locationState.value = LocationState.NoPermissions
         }
     }
-
-
     LaunchedEffect(Unit) {
         if (ContextCompat.checkSelfPermission(
                 context, Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                     locationState.value = LocationState.Model(location)
                 }
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
-
 }

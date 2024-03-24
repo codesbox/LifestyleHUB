@@ -20,10 +20,8 @@ import ru.yasdev.lifestylehub.navigation.PROFILE_GRAPH_ROUTE
 import ru.yasdev.lifestylehub.navigation.navigateBetweenGraphs
 
 @Composable
-fun MainNavigationBar(navController: NavController){
+fun MainNavigationBar(navController: NavController) {
     NavigationBar {
-
-
         val (selectedItem, setSelectedItem) = remember { mutableIntStateOf(0) }
         NavigationBarItem(selected = selectedItem == 0, onClick = {
             setSelectedItem(0)
@@ -38,8 +36,7 @@ fun MainNavigationBar(navController: NavController){
             navController.navigateBetweenGraphs(LEISURE_GRAPH_ROUTE)
         }, icon = {
             Icon(
-                imageVector = Icons.Outlined.DateRange,
-                contentDescription = ""
+                imageVector = Icons.Outlined.DateRange, contentDescription = ""
             )
         }, label = { Text(text = stringResource(id = R.string.мой_досуг)) })
         NavigationBarItem(selected = selectedItem == 2, onClick = {
@@ -47,8 +44,7 @@ fun MainNavigationBar(navController: NavController){
             navController.navigateBetweenGraphs(PROFILE_GRAPH_ROUTE)
         }, icon = {
             Icon(
-                imageVector = Icons.Outlined.AccountCircle,
-                contentDescription = ""
+                imageVector = Icons.Outlined.AccountCircle, contentDescription = ""
             )
         }, label = { Text(text = stringResource(id = R.string.профиль)) })
     }

@@ -5,8 +5,7 @@ import ru.yasdev.common.GetUserIdRepository
 class GetIdUseCase(
     private val getUserIdRepository: GetUserIdRepository
 ) {
-
-    suspend fun execute(): String?{
+    suspend fun execute(): String? {
         return getUserIdRepository.getId()
     }
 }
