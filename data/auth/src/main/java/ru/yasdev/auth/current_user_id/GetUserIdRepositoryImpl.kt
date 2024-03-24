@@ -4,7 +4,7 @@ import ru.yasdev.common.GetUserIdRepository
 
 class GetUserIdRepositoryImpl(
     private val dataSource: GetUserIdDataSource
-): GetUserIdRepository {
+) : GetUserIdRepository {
     override suspend fun getId(): String? {
         return dataSource.getId()
     }

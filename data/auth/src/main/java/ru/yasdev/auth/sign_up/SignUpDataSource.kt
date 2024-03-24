@@ -8,25 +8,25 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
 import org.json.JSONObject
+import ru.yasdev.auth.Constants
 import ru.yasdev.auth.dataBase.AuthDataBase
-import ru.yasdev.auth.dataBase.models.AuthEntity
+import ru.yasdev.auth.dataBase.mappers.toAuthEntity
 import ru.yasdev.auth.sign_up.models.SignUpDTO
 import ru.yasdev.sign_up.data.SaveIdRepository
 import ru.yasdev.sign_up.models.SignUpState
 
-class SignUpDataSource(private val client: HttpClient, context: Context, private val saveIdRepository: SaveIdRepository) {
+class SignUpDataSource(
+    private val client: HttpClient, context: Context, private val saveIdRepository: SaveIdRepository
+) {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val db =
-        Room.databaseBuilder(
-            context,
-            AuthDataBase::class.java,
-            "auth.db"
-        ).build()
+    private val db = Room.databaseBuilder(
+        context, AuthDataBase::class.java, Constants.DB_NAME
+    ).build()
 
     suspend fun signUp(password: String): SignUpState {
-        return try{
+        return try {
             val response = client.get("https://randomuser.me/api/")
             val jsonString: String = response.bodyAsText()
             val results = JSONObject(jsonString).get("results").toString()
@@ -35,15 +35,12 @@ class SignUpDataSource(private val client: HttpClient, context: Context, private
             val signUpDTO: SignUpDTO = json.decodeFromString<SignUpDTO>(string = result)
             println(signUpDTO)
             println(signUpDTO)
-            db.dao.insert(AuthEntity(
-                login = signUpDTO.login.username,
-                password = password,
-                firstName = signUpDTO.name.first,
-                lastName = signUpDTO.name.last
-            ))
+            db.dao.insert(
+                signUpDTO.toAuthEntity(password)
+            )
             saveIdRepository.saveId(signUpDTO.login.username)
             SignUpState.Success
-        }catch (e: Exception){
+        } catch (e: Exception) {
             println(e.message)
             SignUpState.ErrorOnReceipt
         }

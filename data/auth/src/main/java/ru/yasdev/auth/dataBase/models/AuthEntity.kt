@@ -5,9 +5,5 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class AuthEntity(
-    @PrimaryKey
-    val login: String,
-    val password: String,
-    val firstName: String,
-    val lastName: String
+    @PrimaryKey val login: String, val password: String, val firstName: String, val lastName: String
 )

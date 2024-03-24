@@ -11,6 +11,7 @@ interface UserIdDao {
 
     @Query("SELECT * FROM current_user LIMIT 1")
     suspend fun getId(): UserIdEntity?
+
     @Upsert
     suspend fun insertId(model: UserIdEntity)
 

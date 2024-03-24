@@ -16,5 +16,4 @@ interface AuthDao {
     @Query("SELECT * FROM AuthEntity WHERE login = :id")
     suspend fun getUserById(id: String): AuthEntity?
 
-
 }

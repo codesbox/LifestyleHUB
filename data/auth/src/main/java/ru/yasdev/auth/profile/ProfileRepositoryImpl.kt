@@ -5,7 +5,7 @@ import ru.yasdev.profile.models.ProfileState
 
 class ProfileRepositoryImpl(
     private val profileDataSource: ProfileDataSource
-): ProfileRepository {
+) : ProfileRepository {
     override suspend fun getUser(): ProfileState {
         return profileDataSource.getUser()
     }

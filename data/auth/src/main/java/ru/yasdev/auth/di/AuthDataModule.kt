@@ -20,15 +20,14 @@ import ru.yasdev.sign_up.data.SaveIdRepository
 import ru.yasdev.sign_up.data.SignUpRepository
 
 val authDataModule = module {
-    singleOf(::SignUpDataSource){bind<SignUpDataSource>()}
-    singleOf(::SignUpRepositoryImpl){bind<SignUpRepository>()}
-    singleOf(::SaveIdRepositoryImpl){bind<SaveIdRepository>()}
-    singleOf(::SaveIdDataSource){bind<SaveIdDataSource>()}
-    singleOf(::SignInRepositoryImpl){bind<SignInRepository>()}
-    singleOf(::SignInDataSource){bind<SignInDataSource>()}
-    singleOf(::GetUserIdDataSource){bind<GetUserIdDataSource>()}
-    singleOf(::GetUserIdRepositoryImpl){bind<GetUserIdRepository>()}
-    singleOf(::ProfileDataSource){bind<ProfileDataSource>()}
-    singleOf(::ProfileRepositoryImpl){bind<ProfileRepository>()}
-
+    singleOf(::SignUpDataSource) { bind<SignUpDataSource>() }
+    singleOf(::SignUpRepositoryImpl) { bind<SignUpRepository>() }
+    singleOf(::SaveIdRepositoryImpl) { bind<SaveIdRepository>() }
+    singleOf(::SaveIdDataSource) { bind<SaveIdDataSource>() }
+    singleOf(::SignInRepositoryImpl) { bind<SignInRepository>() }
+    singleOf(::SignInDataSource) { bind<SignInDataSource>() }
+    singleOf(::GetUserIdDataSource) { bind<GetUserIdDataSource>() }
+    singleOf(::GetUserIdRepositoryImpl) { bind<GetUserIdRepository>() }
+    singleOf(::ProfileDataSource) { bind<ProfileDataSource>() }
+    singleOf(::ProfileRepositoryImpl) { bind<ProfileRepository>() }
 }
