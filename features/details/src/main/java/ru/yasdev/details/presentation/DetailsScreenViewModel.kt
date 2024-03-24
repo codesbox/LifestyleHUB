@@ -1,5 +1,6 @@
 package ru.yasdev.details.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,9 @@ internal class DetailsScreenViewModel(
             val userId = getUserIdUseCase.execute()
             if (userId != null) {
                 _addButtonState.value = AddButtonState.Ok
+            }
+            else{
+                _addButtonState.value = AddButtonState.NoAuth
             }
         }
     }

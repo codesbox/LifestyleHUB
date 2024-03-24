@@ -7,7 +7,7 @@ import ru.yasdev.profile.models.ProfileState
 
 fun AuthEntity.toProfileModel(): ProfileState.Profile {
     return ProfileState.Profile(
-        firstName = firstName, lastName = lastName, image = image
+        firstName = firstName, lastName = lastName, image = image, id = login
     )
 }
 
