@@ -18,10 +18,11 @@ import ru.yasdev.planner.models.NewEventModel
 import ru.yasdev.planner.models.PlannerState
 
 @Composable
-fun PlannerScreen() {
+fun PlannerScreen(navigateToDetails: (String) -> Unit) {
     Column {
         val viewModel = koinViewModel<PlannerViewModel>()
         val state = viewModel.state.collectAsState().value
+        viewModel.getEvents()
 
         val openDialog = remember {
             mutableStateOf(false)
@@ -68,7 +69,7 @@ fun PlannerScreen() {
                             Text(text = item.date)
                             Text(text = item.title)
                             if(item.link != null){
-                                Button(onClick = { /*TODO*/ }) {
+                                Button(onClick = { navigateToDetails(item.link) }) {
 
                                 }
                             }

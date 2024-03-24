@@ -20,8 +20,7 @@ class PlannerViewModel(
 
     private val _state = MutableStateFlow<PlannerState>(PlannerState.Loading)
     val state = _state.asStateFlow()
-
-    init{
+    fun getEvents(){
         viewModelScope.launch {
             _state.value = getEventsUseCase.execute()
         }
