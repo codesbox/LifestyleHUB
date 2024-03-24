@@ -10,5 +10,4 @@ class GetRecommendationsFeedUseCase(private val repository: RecommendationsFeedR
         return repository.getRecommendationsFeed(location, url)
     }
 
-
 }

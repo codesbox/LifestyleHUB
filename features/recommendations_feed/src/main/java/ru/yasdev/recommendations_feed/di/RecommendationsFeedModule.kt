@@ -8,7 +8,6 @@ import ru.yasdev.recommendations_feed.domain.GetRecommendationsFeedUseCase
 import ru.yasdev.recommendations_feed.presentation.RecommendationsFeedViewModel
 
 val recommendationsFeedModule = module {
-
     viewModelOf(::RecommendationsFeedViewModel)
-    factoryOf(::GetRecommendationsFeedUseCase){bind<GetRecommendationsFeedUseCase>()}
+    factoryOf(::GetRecommendationsFeedUseCase) { bind<GetRecommendationsFeedUseCase>() }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,118 +31,121 @@ import ru.yasdev.weather.models.WeatherState
 import ru.yasdev.weather.models.WeatherEvent
 
 
-@Composable
-fun WeatherWidget(locationState: MutableState<LocationState>) {
 
-    val viewModel = koinViewModel<WeatherViewModel>()
+fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
 
-    val weather = viewModel.weatherState.collectAsState()
+    item {
+        val viewModel = koinViewModel<WeatherViewModel>()
 
-    when (locationState.value) {
-        LocationState.Loading -> {}
-        LocationState.NoPermissions -> {
-            viewModel.onWeatherEvent(WeatherEvent.NoPermissions)
-        }
+        val weather = viewModel.weatherState.collectAsState()
 
-        is LocationState.Model -> {
-            viewModel.onWeatherEvent(WeatherEvent.GetWeather((locationState.value as LocationState.Model).location))
-        }
-    }
-    Card(
-        Modifier
-            .fillMaxWidth()
-            .height(170.dp)
-            .padding(start = 15.dp, top = 15.dp, end = 15.dp)
-    ) {
-        when (weather.value) {
-            WeatherState.Loading -> {
-                Box(
-                    Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.size(50.dp))
-                }
+        when (locationState.value) {
+            LocationState.Loading -> {}
+            LocationState.NoPermissions -> {
+                viewModel.onWeatherEvent(WeatherEvent.NoPermissions)
             }
 
-            WeatherState.NoPermissions -> {
-                Box(
-                    Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Разрешите доступ к местоположению")
-                }
+            is LocationState.Model -> {
+                viewModel.onWeatherEvent(WeatherEvent.GetWeather((locationState.value as LocationState.Model).location))
             }
-
-            is WeatherState.Model -> {
-                Row {
+        }
+        Card(
+            Modifier
+                .fillMaxWidth()
+                .height(170.dp)
+                .padding(start = 15.dp, top = 15.dp, end = 15.dp)
+        ) {
+            when (weather.value) {
+                WeatherState.Loading -> {
                     Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(start = 15.dp),
-                        contentAlignment = Alignment.Center
+                        Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
+                        CircularProgressIndicator(modifier = Modifier.size(50.dp))
+                    }
+                }
+
+                WeatherState.NoPermissions -> {
+                    Box(
+                        Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Разрешите доступ к местоположению")
+                    }
+                }
+
+                is WeatherState.Model -> {
+                    Row {
                         Box(
                             modifier = Modifier
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surface),
+                                .fillMaxHeight()
+                                .padding(start = 15.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Image(
-                                painter = rememberAsyncImagePainter((weather.value as WeatherState.Model).icon),
-                                contentDescription = "null",
-                                modifier = Modifier.size(60.dp)
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.surface),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = rememberAsyncImagePainter((weather.value as WeatherState.Model).icon),
+                                    contentDescription = "null",
+                                    modifier = Modifier.size(60.dp)
+                                )
+                            }
                         }
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(horizontal = 20.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column {
-                            Text(
-                                fontSize = MaterialTheme.typography.displayLarge.fontSize,
-                                text = "${(weather.value as WeatherState.Model).temp}°"
-                            )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(horizontal = 20.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column {
+                                Text(
+                                    fontSize = MaterialTheme.typography.displayLarge.fontSize,
+                                    text = "${(weather.value as WeatherState.Model).temp}°"
+                                )
+                            }
                         }
-                    }
 
-                    Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
-                        Text(
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            text = (weather.value as WeatherState.Model).city,
-                            modifier = Modifier.padding(top = 15.dp, end = 15.dp)
-                        )
-                        Text(
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            text = (weather.value as WeatherState.Model).title,
-                            modifier = Modifier.padding(top = 5.dp, end = 15.dp)
-                        )
-                        Row(modifier = Modifier.padding(top = 5.dp, end = 15.dp)) {
+                        Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
                             Text(
-                                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                                text = "${(weather.value as WeatherState.Model).maxTemp}°",
-                                modifier = Modifier.padding(end = 15.dp)
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                text = (weather.value as WeatherState.Model).city,
+                                modifier = Modifier.padding(top = 15.dp, end = 15.dp)
                             )
                             Text(
-                                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                                text = "${(weather.value as WeatherState.Model).minTemp}°"
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                text = (weather.value as WeatherState.Model).title,
+                                modifier = Modifier.padding(top = 5.dp, end = 15.dp)
+                            )
+                            Row(modifier = Modifier.padding(top = 5.dp, end = 15.dp)) {
+                                Text(
+                                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                                    text = "${(weather.value as WeatherState.Model).maxTemp}°",
+                                    modifier = Modifier.padding(end = 15.dp)
+                                )
+                                Text(
+                                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                                    text = "${(weather.value as WeatherState.Model).minTemp}°"
+                                )
+                            }
+                            Text(
+                                text = "Ощущается как ${(weather.value as WeatherState.Model).feelLike}",
+                                Modifier.padding(end = 15.dp)
                             )
                         }
-                        Text(
-                            text = "Ощущается как ${(weather.value as WeatherState.Model).feelLike}",
-                            Modifier.padding(end = 15.dp)
-                        )
                     }
                 }
-            }
 
-            WeatherState.ErrorOnReceipt -> {
-                Box(
-                    Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Ошибка при загрузке")
+                WeatherState.ErrorOnReceipt -> {
+                    Box(
+                        Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Ошибка при загрузке")
+                    }
                 }
             }
         }
     }
+
 }
