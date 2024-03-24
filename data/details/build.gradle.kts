@@ -52,4 +52,5 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
     implementation(project(":features:details"))
+    implementation(project(":common"))
 }

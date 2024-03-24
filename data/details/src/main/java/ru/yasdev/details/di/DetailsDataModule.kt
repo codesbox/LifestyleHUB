@@ -9,7 +9,7 @@ import ru.yasdev.details.remote.DetailsRepositoryImpl
 import ru.yasdev.details.data.DetailsRepository
 
 val detailsDataModule = module {
-    singleOf(::DetailsRepositoryImpl){bind<DetailsRepository>()}
-    singleOf(::DetailsDataSource){bind<DetailsDataSource>()}
-    singleOf(::CacheStorage){bind<CacheStorage>()}
+    singleOf(::DetailsRepositoryImpl) { bind<DetailsRepository>() }
+    singleOf(::DetailsDataSource) { bind<DetailsDataSource>() }
+    singleOf(::CacheStorage) { bind<CacheStorage>() }
 }

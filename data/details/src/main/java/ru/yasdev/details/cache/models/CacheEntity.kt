@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CacheEntity(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey val id: String,
     val title: String,
     val address: String,
     val photoList: List<String>,

@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import ru.yasdev.details.cache.models.CacheEntity
-import ru.yasdev.details.models.DetailsState
 
 @Dao
 interface CacheDao {

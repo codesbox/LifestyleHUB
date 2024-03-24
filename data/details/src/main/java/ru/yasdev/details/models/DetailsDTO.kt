@@ -1,10 +1,12 @@
 package ru.yasdev.details.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 @Serializable
 data class DetailsDTO(
     val name: String = "",
-    val fsq_id: String,
+    @SerialName("fsq_id") val fsqId: String,
     val categories: List<Category> = emptyList(),
     val location: PlaceLocation = PlaceLocation("")
 )
@@ -13,7 +15,8 @@ data class DetailsDTO(
 data class Category(
     val name: String = ""
 )
+
 @Serializable
 data class PlaceLocation(
-    val formatted_address: String = ""
+    @SerialName("formatted_address") val formattedAddress: String = ""
 )
