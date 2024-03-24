@@ -10,8 +10,8 @@ import ru.yasdev.details.domain.GetUserIdUseCase
 import ru.yasdev.details.presentation.DetailsScreenViewModel
 
 val detailsModule = module {
-    factoryOf(::GetDetailsUseCase){bind<GetDetailsUseCase>()}
-    factoryOf(::AddEventUseCase){bind<AddEventUseCase>()}
-    factoryOf(::GetUserIdUseCase){bind<GetUserIdUseCase>()}
+    factoryOf(::GetDetailsUseCase) { bind<GetDetailsUseCase>() }
+    factoryOf(::AddEventUseCase) { bind<AddEventUseCase>() }
+    factoryOf(::GetUserIdUseCase) { bind<GetUserIdUseCase>() }
     viewModelOf(::DetailsScreenViewModel)
 }

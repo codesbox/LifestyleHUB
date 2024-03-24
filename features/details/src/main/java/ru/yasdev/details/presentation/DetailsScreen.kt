@@ -1,29 +1,21 @@
 package ru.yasdev.details.presentation
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,9 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import org.koin.androidx.compose.koinViewModel
+import ru.yasdev.details.R
 import ru.yasdev.details.models.AddButtonState
 import ru.yasdev.details.models.AddEventModel
 import ru.yasdev.details.models.DetailsState
@@ -47,6 +41,7 @@ fun DetailsScreen(id: String?) {
     val viewModel = koinViewModel<DetailsScreenViewModel>()
     val state = viewModel.detailsState.collectAsState().value
     val buttonState = viewModel.addButtonState.collectAsState().value
+    viewModel.updateButtonState()
 
     if (id != null) {
         LaunchedEffect(Unit) {
@@ -69,7 +64,7 @@ fun DetailsScreen(id: String?) {
                                     painter = rememberAsyncImagePainter(it),
                                     contentDescription = "null",
                                     Modifier
-                                        .width(400.dp)
+                                        .width(300.dp)
                                         .padding(15.dp)
                                         .clip(RoundedCornerShape(25.dp))
                                         .aspectRatio(1f)
@@ -120,16 +115,23 @@ fun DetailsScreen(id: String?) {
                         )
                     }
                     val context = LocalContext.current
-                    when(buttonState){
+                    when (buttonState) {
                         AddButtonState.NoAuth -> {
-                            Button(onClick = {
-                                Toast.makeText(context,"Необходима авторизация",Toast.LENGTH_SHORT).show() }) {
-                                Text(text = "Добавить в планнер")
+                            OutlinedButton(onClick = {
+                                Toast.makeText(
+                                    context, "Необходима авторизация", Toast.LENGTH_SHORT
+                                ).show()
+                            }, Modifier.padding(horizontal = 15.dp)) {
+                                Text(text = stringResource(id = R.string.add))
                             }
                         }
+
                         AddButtonState.Ok -> {
-                            Button(onClick = { openDialog.value = true }) {
-                                Text(text = "Добавить в планнер")
+                            OutlinedButton(
+                                onClick = { openDialog.value = true },
+                                Modifier.padding(horizontal = 15.dp)
+                            ) {
+                                Text(text = stringResource(id = R.string.add))
                             }
                         }
                     }
@@ -142,7 +144,7 @@ fun DetailsScreen(id: String?) {
                 Box(
                     Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Ошибка при загрузке")
+                    Text(text = stringResource(id = R.string.error))
                 }
             }
 
@@ -155,8 +157,6 @@ fun DetailsScreen(id: String?) {
             }
         }
     } else {
-        Text(text = "Возникла непредвиденная ошибка")
+        Text(text = stringResource(id = R.string.error))
     }
-
-
 }
