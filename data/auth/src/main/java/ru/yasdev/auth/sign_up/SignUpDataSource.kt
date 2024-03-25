@@ -9,6 +9,8 @@ import kotlinx.serialization.json.Json
 import org.json.JSONArray
 import org.json.JSONObject
 import ru.yasdev.auth.Constants
+import ru.yasdev.auth.PasswordHasher
+import ru.yasdev.auth.SaltGenerator
 import ru.yasdev.auth.dataBase.AuthDataBase
 import ru.yasdev.auth.dataBase.mappers.toAuthEntity
 import ru.yasdev.auth.sign_up.models.SignUpDTO
@@ -35,8 +37,10 @@ class SignUpDataSource(
             val signUpDTO: SignUpDTO = json.decodeFromString<SignUpDTO>(string = result)
             println(signUpDTO)
             println(signUpDTO)
+            val salt = SaltGenerator.generateSaltString()
+            val passwordHash = PasswordHasher.hashPassword(password, salt)
             db.dao.insert(
-                signUpDTO.toAuthEntity(password)
+                signUpDTO.toAuthEntity(hashPassword = passwordHash, salt = salt)
             )
             saveIdRepository.saveId(signUpDTO.login.username)
             SignUpState.Success

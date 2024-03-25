@@ -11,13 +11,14 @@ fun AuthEntity.toProfileModel(): ProfileState.Profile {
     )
 }
 
-fun SignUpDTO.toAuthEntity(password: String): AuthEntity {
+fun SignUpDTO.toAuthEntity(hashPassword: String, salt: String): AuthEntity {
     return AuthEntity(
         login = login.username,
-        password = password,
+        hashPassword = hashPassword,
         firstName = name.first,
         lastName = name.last,
-        image = picture.medium
+        image = picture.medium,
+        salt = salt
     )
 }
 

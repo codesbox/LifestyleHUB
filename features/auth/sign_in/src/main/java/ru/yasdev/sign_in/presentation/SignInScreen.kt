@@ -77,7 +77,7 @@ fun SignInScreen(navigator: (SignInNavigator) -> Unit) {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
                 when (state) {
                     SignInState.UserNotFound -> {
-                        Text(text = stringResource(id = R.string.error), Modifier.padding(15.dp))
+                        Text(text = stringResource(id = R.string.not_found), Modifier.padding(15.dp))
                     }
 
                     SignInState.Loading -> {

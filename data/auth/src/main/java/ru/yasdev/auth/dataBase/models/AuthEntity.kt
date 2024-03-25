@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class AuthEntity(
     @PrimaryKey val login: String,
-    val password: String,
+    val hashPassword: String,
+    val salt: String,
     val firstName: String,
     val lastName: String,
     val image: String

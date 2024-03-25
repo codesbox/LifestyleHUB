@@ -5,5 +5,5 @@
     <string name="sign_in">Войти</string>
     <string name="sign_up">Регистрация</string>
     <string name="entrance">Вход</string>
-    <string name="error">Неверный логин или пароль</string>
+    <string name="not_found">Неверный логин или пароль</string>
 </resources>
