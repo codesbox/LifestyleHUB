@@ -50,7 +50,6 @@ fun NavGraphBuilder.homeNavGraph(
 
         composable(route = Destinations.HomeScreenRoute.route) { HomeScreen(navController = navController) }
         composable(route = Destinations.DetailsScreenRoute.route) { backStackEntry ->
-            println(backStackEntry.arguments?.getString("id"))
             DetailsScreen(backStackEntry.arguments?.getString("id"), ::popBackStack)
         }
     }

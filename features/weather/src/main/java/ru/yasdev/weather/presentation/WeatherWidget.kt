@@ -19,9 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import ru.yasdev.common.shimmerEffect
+import ru.yasdev.weather.R
 import ru.yasdev.weather.models.WeatherState
 
 
@@ -39,7 +41,9 @@ fun LazyListScope.weatherWidget(
             when (state) {
                 WeatherState.Loading -> {
                     Box(
-                        Modifier.fillMaxSize().shimmerEffect(), contentAlignment = Alignment.Center
+                        Modifier
+                            .fillMaxSize()
+                            .shimmerEffect(), contentAlignment = Alignment.Center
                     ) {
 
                     }
@@ -49,7 +53,7 @@ fun LazyListScope.weatherWidget(
                     Box(
                         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Разрешите доступ к местоположению")
+                        Text(text = stringResource(id = R.string.error_location))
                     }
                 }
 
@@ -111,7 +115,7 @@ fun LazyListScope.weatherWidget(
                                 )
                             }
                             Text(
-                                text = "Ощущается как ${state.feelLike}",
+                                text = "${stringResource(id = R.string.feel_like)} ${state.feelLike}",
                                 Modifier.padding(end = 15.dp)
                             )
                         }
@@ -122,7 +126,7 @@ fun LazyListScope.weatherWidget(
                     Box(
                         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Ошибка при загрузке")
+                        Text(text = stringResource(id = R.string.error))
                     }
                 }
             }

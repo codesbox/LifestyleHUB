@@ -8,4 +8,5 @@
     <string name="date">Дата</string>
     <string name="title">Название</string>
     <string name="new_dialog">Новый досуг</string>
+    <string name="note">Заметки</string>
 </resources>

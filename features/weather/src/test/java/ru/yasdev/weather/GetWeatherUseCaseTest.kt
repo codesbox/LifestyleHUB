@@ -1,19 +1,14 @@
 package ru.yasdev.weather
 
 import android.location.Location
-import android.util.Log
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Test
-
 import org.junit.Assert.*
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import ru.yasdev.weather.data.WeatherRepository
 import ru.yasdev.weather.domain.GetWeatherUseCase
 import ru.yasdev.weather.models.WeatherState
-
 
 
 class GetWeatherUseCaseTest {

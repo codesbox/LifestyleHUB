@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">Ошибка при загрузке</string>
+    <string name="error_location">Разрешите доступ к местоположению</string>
+    <string name="feel_like">Ощущается как</string>
+</resources>

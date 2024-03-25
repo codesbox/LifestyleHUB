@@ -20,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import ru.yasdev.recommendations_feed.R
 import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 
@@ -32,7 +34,6 @@ fun LazyListScope.recommendationsFeed(
 ) {
 
 
-
     when (state) {
         RecommendationsFeedState.ErrorOnReceipt -> {
             item {
@@ -41,7 +42,7 @@ fun LazyListScope.recommendationsFeed(
                         .fillMaxWidth()
                         .height(200.dp), contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Ошибка при загрузке")
+                    Text(text = stringResource(id = R.string.error))
                 }
             }
 
@@ -87,7 +88,7 @@ fun LazyListScope.recommendationsFeed(
                         )
                     }
                     Text(
-                        text = "Адрес: ${item.address}",
+                        text = "${stringResource(id = R.string.address)} ${item.address}",
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     LazyRow {
@@ -122,7 +123,7 @@ fun LazyListScope.recommendationsFeed(
                         .fillMaxWidth()
                         .height(200.dp), contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Разрешите доступ к местоположению")
+                    Text(text = stringResource(id = R.string.error_location))
                 }
             }
 

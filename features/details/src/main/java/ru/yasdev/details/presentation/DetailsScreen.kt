@@ -58,7 +58,9 @@ fun DetailsScreen(id: String?, popBackStack: () -> Unit) {
         when (state) {
             is DetailsState.Details -> {
                 Column {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(top = 15.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp)) {
                         IconButton(onClick = { popBackStack() }, Modifier.padding(horizontal = 15.dp)) {
                             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
                         }
@@ -86,7 +88,7 @@ fun DetailsScreen(id: String?, popBackStack: () -> Unit) {
                         }
                     }
                     Text(
-                        text = "Адрес: ${state.address}",
+                        text = "${stringResource(id = R.string.address)} ${state.address}",
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     LazyRow {

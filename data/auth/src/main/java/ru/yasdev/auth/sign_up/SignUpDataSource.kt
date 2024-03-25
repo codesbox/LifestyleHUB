@@ -33,7 +33,6 @@ class SignUpDataSource(
             val jsonString: String = response.bodyAsText()
             val results = JSONObject(jsonString).get("results").toString()
             val result = JSONArray(results).get(0).toString()
-            println(result)
             val signUpDTO: SignUpDTO = json.decodeFromString<SignUpDTO>(string = result)
             val salt = SaltGenerator.generateSaltString()
             val passwordHash = PasswordHasher.hashPassword(password, salt)
@@ -43,7 +42,6 @@ class SignUpDataSource(
             saveIdRepository.saveId(signUpDTO.login.username)
             SignUpState.Success
         } catch (e: Exception) {
-            println(e.message)
             SignUpState.ErrorOnReceipt
         }
     }

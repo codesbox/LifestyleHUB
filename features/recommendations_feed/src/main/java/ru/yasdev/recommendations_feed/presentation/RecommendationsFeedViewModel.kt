@@ -24,7 +24,7 @@ class RecommendationsFeedViewModel(
         _location.value = location
     }
 
-    fun pagination(){
+    fun pagination() {
         isPagination.value = true
     }
 
@@ -54,33 +54,39 @@ class RecommendationsFeedViewModel(
     private fun getFeed(location: Location?, url: String?) {
         viewModelScope.launch {
 
-            when(recommendationsFeedState.value){
+            when (recommendationsFeedState.value) {
                 RecommendationsFeedState.ErrorOnReceipt -> {
                     val feedState = useCase.execute(location = location, url = url)
                     _recommendationsFeedState.value = feedState
                     isPagination.value = false
                 }
+
                 RecommendationsFeedState.Loading -> {
                     val feedState = useCase.execute(location = location, url = url)
                     _recommendationsFeedState.value = feedState
                     isPagination.value = false
                 }
+
                 is RecommendationsFeedState.Model -> {
-                    when(val feedState = useCase.execute(location = location, url = url)){
+                    when (val feedState = useCase.execute(location = location, url = url)) {
                         RecommendationsFeedState.ErrorOnReceipt -> {
                             _recommendationsFeedState.value = feedState
                             isPagination.value = false
                         }
+
                         RecommendationsFeedState.Loading -> {
                             _recommendationsFeedState.value = feedState
                             isPagination.value = false
                         }
+
                         is RecommendationsFeedState.Model -> {
                             val combinedList =
                                 (recommendationsFeedState.value as RecommendationsFeedState.Model).list + feedState.list
-                            _recommendationsFeedState.value = RecommendationsFeedState.Model(combinedList, feedState.url)
+                            _recommendationsFeedState.value =
+                                RecommendationsFeedState.Model(combinedList, feedState.url)
                             isPagination.value = false
                         }
+
                         RecommendationsFeedState.NoPermissions -> {
                             _recommendationsFeedState.value = feedState
                             isPagination.value = false
@@ -88,6 +94,7 @@ class RecommendationsFeedViewModel(
                     }
 
                 }
+
                 RecommendationsFeedState.NoPermissions -> {
                     val feedState = useCase.execute(location = location, url = url)
                     _recommendationsFeedState.value = feedState

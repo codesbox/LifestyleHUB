@@ -24,7 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ru.yasdev.planner.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,21 +63,21 @@ fun AddEventAlertDialog(
 
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Новый досуг",
+                        text = stringResource(id = R.string.add_dialog),
                         fontSize = MaterialTheme.typography.headlineSmall.fontSize
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     OutlinedTextField(value = newTitle,
                         onValueChange = { newTitle = it },
-                        label = { Text(text = "Название") })
+                        label = { Text(text = stringResource(id = R.string.title)) })
                     Spacer(modifier = Modifier.height(24.dp))
                     OutlinedTextField(value = newDate,
                         onValueChange = { newDate = it },
-                        label = { Text(text = "Дата") })
+                        label = { Text(text = stringResource(id = R.string.date)) })
                     Spacer(modifier = Modifier.height(24.dp))
                     OutlinedTextField(value = newNote,
                         onValueChange = { newNote = it },
-                        label = { Text(text = "Заметки")})
+                        label = { Text(text = stringResource(id = R.string.note))})
                     Spacer(modifier = Modifier.height(24.dp))
                     Row(
                         horizontalArrangement = Arrangement.End,
@@ -84,7 +86,7 @@ fun AddEventAlertDialog(
                         TextButton(onClick = {
                             openDialog.value = false
                         }) {
-                            Text("Отмена")
+                            Text(stringResource(id = R.string.cancel))
                         }
                         TextButton(onClick = {
                             title.value = newTitle
@@ -92,7 +94,7 @@ fun AddEventAlertDialog(
                             note.value = newNote
                             openDialog.value = false
                         }) {
-                            Text("Добавить")
+                            Text(stringResource(id = R.string.add_dialog))
                         }
                     }
                 }
