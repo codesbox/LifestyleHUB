@@ -61,7 +61,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.coil.compose)
-
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     implementation(libs.koin.androidx.compose)
     implementation(project(":common"))
 }

@@ -47,6 +47,10 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.serialization.json)
 
+        //testImplementation("org.mockito:mockito-core:3.2.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    //testImplementation("io.mockk:mockk:3.2.0")
+
     implementation(project(":features:weather"))
     implementation(project(":common"))
 }
