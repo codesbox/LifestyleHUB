@@ -2,5 +2,4 @@
 <resources>
     <string name="error">Ошибка при загрузке</string>
     <string name="add">Добавить в планнер</string>
-    <string name="auth">Необходима авторизация</string>
 </resources>

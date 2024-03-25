@@ -44,7 +44,7 @@ fun NavGraphBuilder.homeNavGraph(
         startDestination = Destinations.HomeScreenRoute.route, route = HOME_GRAPH_ROUTE
     ) {
 
-        fun popBackStack(){
+        fun popBackStack() {
             navController.popBackStack()
         }
 

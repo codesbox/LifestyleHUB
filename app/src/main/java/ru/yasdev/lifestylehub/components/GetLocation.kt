@@ -24,8 +24,8 @@ fun GetLocation(locationState: MutableState<LocationState>) {
         if (isGranted) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    locationState.value = LocationState.Model(location)
-                }
+                locationState.value = LocationState.Model(location)
+            }
 
         } else {
             locationState.value = LocationState.NoPermissions
@@ -38,8 +38,8 @@ fun GetLocation(locationState: MutableState<LocationState>) {
         ) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    locationState.value = LocationState.Model(location)
-                }
+                locationState.value = LocationState.Model(location)
+            }
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }

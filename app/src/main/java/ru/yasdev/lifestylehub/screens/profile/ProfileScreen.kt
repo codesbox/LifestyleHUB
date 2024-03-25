@@ -34,6 +34,7 @@ fun MainProfileScreen(navController: NavHostController) {
                     }
                 }
             }
+
             SignInNavigator.ToSignUpScreen -> {
                 navController.navigate(Destinations.SignUpScreenRoute.route)
             }

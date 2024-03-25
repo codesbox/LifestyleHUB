@@ -35,8 +35,6 @@ class SignUpDataSource(
             val result = JSONArray(results).get(0).toString()
             println(result)
             val signUpDTO: SignUpDTO = json.decodeFromString<SignUpDTO>(string = result)
-            println(signUpDTO)
-            println(signUpDTO)
             val salt = SaltGenerator.generateSaltString()
             val passwordHash = PasswordHasher.hashPassword(password, salt)
             db.dao.insert(
