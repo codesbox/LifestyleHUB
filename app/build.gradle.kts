@@ -72,6 +72,11 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.play.services.location)
 
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     implementation(project(":features:weather"))
     implementation(project(":data:weather"))
     implementation(project(":features:recommendations_feed"))

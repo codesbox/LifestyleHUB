@@ -1,6 +1,5 @@
 package ru.yasdev.recommendations_feed.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,37 +17,21 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import ru.yasdev.common.LocationState
-import ru.yasdev.recommendations_feed.models.FeedEvent
 import ru.yasdev.recommendations_feed.models.RecommendationsFeedState
 
 
 fun LazyListScope.recommendationsFeed(
-    locationState: MutableState<LocationState>,
     navigateToDetails: (id: String) -> Unit,
     viewModel: RecommendationsFeedViewModel,
     state: RecommendationsFeedState
 ) {
 
-    when (locationState.value) {
-        LocationState.Loading -> {}
-        LocationState.NoPermissions -> {
-            viewModel.onEvent(FeedEvent.NoPermissions)
-        }
 
-        is LocationState.Model -> {
-            if (state !is RecommendationsFeedState.Model) {
-                viewModel.updateLocation((locationState.value as LocationState.Model).location)
-                viewModel.onEvent(FeedEvent.RefreshFeed)
-            }
-        }
-    }
 
     when (state) {
         RecommendationsFeedState.ErrorOnReceipt -> {

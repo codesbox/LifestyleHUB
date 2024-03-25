@@ -10,10 +10,15 @@ import ru.yasdev.weather.domain.GetWeatherUseCase
 import ru.yasdev.weather.models.WeatherState
 import ru.yasdev.weather.models.WeatherEvent
 
-internal class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewModel() {
+class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewModel() {
 
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
     val weatherState = _weatherState.asStateFlow()
+    private val _location = MutableStateFlow<Location?>(null)
+
+    fun updateLocation(location: Location?) {
+        _location.value = location
+    }
 
     fun onWeatherEvent(weatherEvent: WeatherEvent) {
         when (weatherEvent) {
@@ -21,14 +26,15 @@ internal class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase
                 _weatherState.value = WeatherState.NoPermissions
             }
 
-            is WeatherEvent.GetWeather -> {
-                getWeather(weatherEvent.location)
+            WeatherEvent.GetWeather -> {
+                getWeather(_location.value)
             }
         }
     }
 
     private fun getWeather(location: Location?) {
         viewModelScope.launch {
+            _weatherState.value = WeatherState.Loading
             getWeatherUseCase.execute(location).collect { weather ->
                 _weatherState.value = weather
             }

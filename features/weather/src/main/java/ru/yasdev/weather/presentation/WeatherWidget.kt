@@ -1,5 +1,6 @@
 package ru.yasdev.weather.presentation
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,44 +18,27 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import org.koin.androidx.compose.koinViewModel
-import ru.yasdev.common.LocationState
 import ru.yasdev.weather.models.WeatherState
-import ru.yasdev.weather.models.WeatherEvent
 
 
-
-fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
+fun LazyListScope.weatherWidget(
+    state: WeatherState
+) {
 
     item {
-        val viewModel = koinViewModel<WeatherViewModel>()
-
-        val weather = viewModel.weatherState.collectAsState()
-
-        when (locationState.value) {
-            LocationState.Loading -> {}
-            LocationState.NoPermissions -> {
-                viewModel.onWeatherEvent(WeatherEvent.NoPermissions)
-            }
-
-            is LocationState.Model -> {
-                viewModel.onWeatherEvent(WeatherEvent.GetWeather((locationState.value as LocationState.Model).location))
-            }
-        }
         Card(
             Modifier
                 .fillMaxWidth()
                 .height(170.dp)
                 .padding(start = 15.dp, top = 15.dp, end = 15.dp)
         ) {
-            when (weather.value) {
+            when (state) {
                 WeatherState.Loading -> {
                     Box(
                         Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -86,7 +70,7 @@ fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter((weather.value as WeatherState.Model).icon),
+                                    painter = rememberAsyncImagePainter(state.icon),
                                     contentDescription = "null",
                                     modifier = Modifier.size(60.dp)
                                 )
@@ -101,7 +85,7 @@ fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
                             Column {
                                 Text(
                                     fontSize = MaterialTheme.typography.displayLarge.fontSize,
-                                    text = "${(weather.value as WeatherState.Model).temp}°"
+                                    text = "${state.temp}°"
                                 )
                             }
                         }
@@ -109,27 +93,27 @@ fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
                         Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
                             Text(
                                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                text = (weather.value as WeatherState.Model).city,
+                                text = state.city,
                                 modifier = Modifier.padding(top = 15.dp, end = 15.dp)
                             )
                             Text(
                                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                text = (weather.value as WeatherState.Model).title,
+                                text = state.title,
                                 modifier = Modifier.padding(top = 5.dp, end = 15.dp)
                             )
                             Row(modifier = Modifier.padding(top = 5.dp, end = 15.dp)) {
                                 Text(
                                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                                    text = "${(weather.value as WeatherState.Model).maxTemp}°",
+                                    text = "${state.maxTemp}°",
                                     modifier = Modifier.padding(end = 15.dp)
                                 )
                                 Text(
                                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                                    text = "${(weather.value as WeatherState.Model).minTemp}°"
+                                    text = "${state.minTemp}°"
                                 )
                             }
                             Text(
-                                text = "Ощущается как ${(weather.value as WeatherState.Model).feelLike}",
+                                text = "Ощущается как ${state.feelLike}",
                                 Modifier.padding(end = 15.dp)
                             )
                         }
@@ -146,5 +130,4 @@ fun LazyListScope.weatherWidget(locationState: MutableState<LocationState>) {
             }
         }
     }
-
 }

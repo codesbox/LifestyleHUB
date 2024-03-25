@@ -53,26 +53,53 @@ class RecommendationsFeedViewModel(
 
     private fun getFeed(location: Location?, url: String?) {
         viewModelScope.launch {
-            val feedState = useCase.execute(location = location, url = url)
-            if (feedState is RecommendationsFeedState.Model) {
-                if (recommendationsFeedState.value is RecommendationsFeedState.Model) {
-                    val combinedList =
-                        (recommendationsFeedState.value as RecommendationsFeedState.Model).list + feedState.list
-                    _recommendationsFeedState.value =
-                        RecommendationsFeedState.Model(combinedList, feedState.url)
-                    isPagination.value = false
-                } else {
+
+            when(recommendationsFeedState.value){
+                RecommendationsFeedState.ErrorOnReceipt -> {
+                    val feedState = useCase.execute(location = location, url = url)
                     _recommendationsFeedState.value = feedState
                     isPagination.value = false
                 }
-            } else {
-                _recommendationsFeedState.value = feedState
+                RecommendationsFeedState.Loading -> {
+                    val feedState = useCase.execute(location = location, url = url)
+                    _recommendationsFeedState.value = feedState
+                    isPagination.value = false
+                }
+                is RecommendationsFeedState.Model -> {
+                    when(val feedState = useCase.execute(location = location, url = url)){
+                        RecommendationsFeedState.ErrorOnReceipt -> {
+                            _recommendationsFeedState.value = feedState
+                            isPagination.value = false
+                        }
+                        RecommendationsFeedState.Loading -> {
+                            _recommendationsFeedState.value = feedState
+                            isPagination.value = false
+                        }
+                        is RecommendationsFeedState.Model -> {
+                            val combinedList =
+                                (recommendationsFeedState.value as RecommendationsFeedState.Model).list + feedState.list
+                            _recommendationsFeedState.value = RecommendationsFeedState.Model(combinedList, feedState.url)
+                            isPagination.value = false
+                        }
+                        RecommendationsFeedState.NoPermissions -> {
+                            _recommendationsFeedState.value = feedState
+                            isPagination.value = false
+                        }
+                    }
+
+                }
+                RecommendationsFeedState.NoPermissions -> {
+                    val feedState = useCase.execute(location = location, url = url)
+                    _recommendationsFeedState.value = feedState
+                    isPagination.value = false
+                }
             }
         }
     }
 
     private fun refreshFeed() {
         viewModelScope.launch {
+            _recommendationsFeedState.value = RecommendationsFeedState.Loading
             _recommendationsFeedState.value = useCase.execute(_location.value, url = null)
         }
     }
