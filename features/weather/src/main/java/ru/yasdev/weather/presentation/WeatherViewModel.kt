@@ -35,9 +35,7 @@ class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewM
     private fun getWeather(location: Location?) {
         viewModelScope.launch {
             _weatherState.value = WeatherState.Loading
-            getWeatherUseCase.execute(location).collect { weather ->
-                _weatherState.value = weather
-            }
+            _weatherState.value = getWeatherUseCase.execute(location)
         }
     }
 }

@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 import ru.yasdev.weather.models.WeatherState
 
 interface WeatherRepository {
-    fun getWeather(location: Location?): Flow<WeatherState>
+    suspend fun getWeather(location: Location?): WeatherState
 }
