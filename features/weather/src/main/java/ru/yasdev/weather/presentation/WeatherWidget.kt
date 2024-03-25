@@ -1,6 +1,5 @@
 package ru.yasdev.weather.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,15 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import ru.yasdev.common.shimmerEffect
 import ru.yasdev.weather.models.WeatherState
 
 
@@ -41,9 +39,9 @@ fun LazyListScope.weatherWidget(
             when (state) {
                 WeatherState.Loading -> {
                     Box(
-                        Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                        Modifier.fillMaxSize().shimmerEffect(), contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(modifier = Modifier.size(50.dp))
+
                     }
                 }
 
