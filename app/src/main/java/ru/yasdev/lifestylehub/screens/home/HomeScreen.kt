@@ -1,5 +1,6 @@
 package ru.yasdev.lifestylehub.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -30,17 +31,16 @@ fun HomeScreen(navController: NavController) {
 
 
     val viewModel = koinViewModel<RecommendationsFeedViewModel>()
-    val lazyColumnListState = rememberLazyListState()
     val state = viewModel.recommendationsFeedState.collectAsState().value
     val isPagination = viewModel.isPagination.collectAsState().value
     if (isPagination) {
         viewModel.onEvent(FeedEvent.GetFeed)
     }
 
-    LazyColumn(state = lazyColumnListState) {
+    LazyColumn {
         weatherWidget(locationState)
         recommendationsFeed(
-            locationState, ::navigateToDetails, viewModel, lazyColumnListState, state
+            locationState, ::navigateToDetails, viewModel, state
         )
     }
 

@@ -34,7 +34,6 @@ fun LazyListScope.recommendationsFeed(
     locationState: MutableState<LocationState>,
     navigateToDetails: (id: String) -> Unit,
     viewModel: RecommendationsFeedViewModel,
-    lazyColumnListState: LazyListState,
     state: RecommendationsFeedState
 ) {
 
@@ -130,10 +129,7 @@ fun LazyListScope.recommendationsFeed(
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(50.dp))
                 }
-            }
-            if (lazyColumnListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == state.list.size + 1) {
-                Log.d("GGGG", "sjdksjdk")
-                viewModel.isPagination.value = true
+                viewModel.pagination()
             }
         }
 

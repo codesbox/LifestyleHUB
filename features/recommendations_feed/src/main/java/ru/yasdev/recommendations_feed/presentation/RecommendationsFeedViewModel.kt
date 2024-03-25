@@ -24,6 +24,10 @@ class RecommendationsFeedViewModel(
         _location.value = location
     }
 
+    fun pagination(){
+        isPagination.value = true
+    }
+
     fun onEvent(feedEvent: FeedEvent) {
         when (feedEvent) {
             is FeedEvent.GetFeed -> {
